@@ -25,10 +25,9 @@
                         <thead>
                             <tr role="row">
                                 <th>Kelas</th>
-                                <th>Ruang</th>
                                 <th>Mapel</th>
                                 <th>Hari</th>
-                                <th>Jam</th>
+                                <th>Jam Ke</th>
                             </tr>
                         </thead>
                     </table>
@@ -54,11 +53,11 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('dashboard-guru') }}",
+            order: [
+                [2, 'asc'],
+                [3, 'asc'],
+            ],
             columns: [{
-                    data: 'kelas',
-                    name: 'kelas'
-                },
-                {
                     data: 'sub_kelas',
                     name: 'sub_kelas'
                 },

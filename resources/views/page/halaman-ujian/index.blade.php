@@ -15,28 +15,28 @@
                 <h4 class="card-title">List Ujian</h4>
             </div>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Ulangan</th>
-                            <th>Mapel</th>
-                            <th>Mulai</th>
-                            <th>Selesai</th>
+                            <th>Ujian</th>
                             <th>Tipe</th>
-                            <th>Aksi</th>
+                            <th style="width: 1px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($ujian as $data)
                         <tr>
-                            <td>{{$data->title}}</td>
-                            <td>{{$data->jadwalBM->mapel->nama_mapel}}</td>
-                            <td>{{Carbon\Carbon::parse($data->waktu_mulai)->format('d, M Y H:i')}}</td>
-                            <td>{{Carbon\Carbon::parse($data->waktu_selesai)->format('d, M Y H:i')}}</td>
+                            <td>
+                                <span>{{$data->title}}</span>
+                                <hr style="margin: 0;">
+                                <span style="font-size: 12px;">{{$data->jadwalBM->mapel->nama_mapel}}</span>
+                                <hr style="margin: 0;">
+                                <span style="font-size: 11px;">{{Carbon\Carbon::parse($data->waktu_mulai)->format('d/m H:i')}} - {{Carbon\Carbon::parse($data->waktu_selesai)->format('d/m H:i')}}</span>
+                            </td>
                             @if($data->type_ujian == 'pg')
-                            <td>PG (Satu Jawaban)</td>
+                            <td>PG</td>
                             @elseif($data->type_ujian == 'mc')
-                            <td>PG (Banyak Jawaban)</td>
+                            <td>PG Kompleks</td>
                             @else
                             <td>Essay</td>
                             @endif

@@ -40,12 +40,10 @@
     <span id="durasi" class="badge badge-info fixed-top" style="border-radius: 0;">0 : 0 : 0 : 0</span>
     <section id="container">
         <div class="card mt-3">
-            <div class="card-header pb-0 d-flex justify-content-between">
-                <div>
-                    <img src="{{ asset('app-assets/images/logo_majelis_pendidikan.png') }}" width="100" alt="logo majelis">
-                </div>
-                <div>
-                    <img src="{{ asset('app-assets/images/logo_mi_muhammadiyah_23_surabaya-removebg-preview.png') }}" width="100" alt="logo mim 23 surabaya">
+            <div class="kop-soal pb-0 d-flex justify-content-between align-items-center">
+                <img class="kop-soal-img" src="{{ asset('app-assets/images/logo_mi_muhammadiyah_23_surabaya-removebg-preview.png') }}" alt="logo mim 23 surabaya">
+                <div class="w-100 text-center">
+                    <h1 class="kop-soal-title">{{$nilai->ujian->title}}</h1>
                 </div>
             </div>
             <div class="title-page">
@@ -68,11 +66,6 @@
                     <td class="text-uppercase">{{ Auth::guard('siswa')->user()->subKelas->kelas->nama_kelas }} - {{ Auth::guard('siswa')->user()->subKelas->sub_kelas }}</td>
                 </tr>
                 <tr>
-                    <td>Ujian</td>
-                    <td>:</td>
-                    <td>{{$nilai->ujian->title}}</td>
-                </tr>
-                <tr>
                     <td>Waktu</td>
                     <td>:</td>
                     <td>{{$nilai->ujian->waktu_ujian}} Menit</td>
@@ -86,11 +79,10 @@
             </table>
             <hr>
             <div class="card-body">
-                <form id="myForm" action="{{ route('create.essay.store') }}" method="post" enctype="multipart/form-data" onsubmit="return validasiForm()">
+                <form id="myForm" action="{{ route('create.essay.store') }}" method="post" enctype="multipart/form-data">
                     @method('patch')
                     @csrf
                     <input type="hidden" name="nilai_id" value="{{$nilai->id}}">
-                    <input type="hidden" name="keterlambatan" value="-" id="keterlambatan">
                     @foreach($nilai->jawaban as $data)
                     <div id="soal{{$loop->iteration}}">
                         <span class="font-weight-bold" style="background-color: #EEF1FF; padding: 5px; border-radius: 5px 5px 0 0;">Soal No. {{$loop->iteration}}</span>
@@ -107,7 +99,7 @@
                             <label for="gambar{{$loop->iteration}}">Pilih Gambar</label>
                             <input type="file" class="form-control-file" id="gambar{{$loop->iteration}}" name="gambar[]">
                             <img src="" class="img-modal img-fluid img-preview{{$loop->iteration}} d-block" style="margin-top: 5px; border-radius: 5px; opacity: 0.5; cursor: pointer;" width="50px">
-                            <input type="hidden" name="cek_gambar[]" value="">
+                            <input type="hidden" id="cek_gambar{{$loop->iteration}}" name="cek_gambar[]" value="">
                         </div>
                         <div class="form-group">
                             <label for="jawaban">Jawaban</label>
@@ -116,7 +108,7 @@
                         <hr>
                     </div>
                     @endforeach
-                    <button class="btn-selesai btn btn-primary waves-effect waves-float waves-light" type="button">Selesai</button>
+                    <button class="btn-selesai btn-sm btn btn-primary waves-effect waves-float waves-light" type="button">Selesai</button>
                 </form>
             </div>
         </div>
@@ -165,16 +157,9 @@
             if (distance > 0) {
                 document.getElementById("durasi").innerHTML = days + " : " + hours + " : " +
                     minutes + " : " + seconds;
-            }
-
-            if (distance < 0) {
-                document.getElementById("durasi").innerHTML = "Terlambat " + Math.abs(days + 1) + " : " + Math.abs(hours + 1) + " : " +
-                    Math.abs(minutes + 1) + " : " + Math.abs(seconds);
-                var element = document.getElementById("durasi");
-                element.classList.add("badge-warning");
-                element.classList.remove("badge-info");
-                var html = Math.abs(days + 1) + " : " + Math.abs(hours + 1) + " : " + Math.abs(minutes + 1) + " : " + Math.abs(seconds);
-                $('#keterlambatan').val(html);
+            } else {
+                clearInterval(x);
+                $('#myForm').submit();
             }
         }, 1000);
 
@@ -190,6 +175,7 @@
                         text: 'Gambar yang diunggah maksimal 2 MB!',
                     })
                     this.value = "";
+                    $(`#cek_gambar${index}`).val("");
                 } else {
                     const gambar = document.querySelector(`#gambar${index}`);
                     const imgPreview = document.querySelector(`.img-preview${index}`);
@@ -200,6 +186,7 @@
                     oFReader.onload = function(oFREvent) {
                         imgPreview.src = oFREvent.target.result;
                     }
+                    $(`#cek_gambar${index}`).val(this.value);
                 }
             });
         }
@@ -238,7 +225,6 @@
                     })
                     return false;
                 }
-                cek_gambar[index].value = gambar[index].value;
             }
             $('#loading').removeClass('d-none');
             return true;
@@ -258,7 +244,9 @@
                 confirmButtonText: 'Ya, Simpan!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#myForm').submit();
+                    if (validasiForm()) {
+                        $('#myForm').submit();
+                    }
                 }
             })
         });

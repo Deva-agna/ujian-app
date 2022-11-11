@@ -16,6 +16,7 @@
 @section('page-css')
 <link rel="stylesheet" type="text/css" href=" {{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }} ">
 <link rel="stylesheet" type="text/css" href=" {{ asset('app-assets/css/plugins/forms/pickers/form-pickadate.css') }} ">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/sweetalert2.min.css') }}">
 @endsection
 
 @section('konten')
@@ -88,8 +89,8 @@
                             <input type="file" name="image" class="form-control-file mb-1" name="image" id="image" accept="image/*" onchange="previewImage()">
                             <img src="" class=" img-fluid img-preview d-block" width="180px">
                         </div>
-                        <a href="{{ route('guru') }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('guru') }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -116,19 +117,28 @@
 @endsection
 
 @section('script')
-
+<script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
 <script>
     function previewImage() {
         const image = document.querySelector('#image');
         const imgPreview = document.querySelector('.img-preview');
+        if (image.files[0].size > 2 * 1048576) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                text: 'Gambar yang diunggah maksimal 2 MB!',
+            })
+            image.value = "";
+            imgPreview.src = "";
+        } else {
+            imgPreview.style.display = 'block';
 
-        imgPreview.style.display = 'block';
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
 
-        const oFReader = new FileReader();
-        oFReader.readAsDataURL(image.files[0]);
-
-        oFReader.onload = function(oFREvent) {
-            imgPreview.src = oFREvent.target.result;
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
         }
     }
 </script>

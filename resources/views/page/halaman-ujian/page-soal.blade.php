@@ -41,90 +41,84 @@
 
     <span id="durasi" class="badge badge-info fixed-top" style="border-radius: 0;">0 : 0 : 0 : 0</span>
     <section id="container">
-        <div class="card mt-3">
-            <div class="card-header pb-0 d-flex justify-content-between">
-                <div>
-                    <img src="{{ asset('app-assets/images/logo_majelis_pendidikan.png') }}" width="100" alt="logo majelis">
-                </div>
-                <div>
-                    <img src="{{ asset('app-assets/images/logo_mi_muhammadiyah_23_surabaya-removebg-preview.png') }}" width="100" alt="logo mim 23 surabaya">
+        <div class="card card-custome mt-3">
+            <div class="kop-soal pb-0 d-flex justify-content-between align-items-center">
+                <img class="kop-soal-img" src="{{ asset('app-assets/images/logo_mi_muhammadiyah_23_surabaya-removebg-preview.png') }}" alt="logo mim 23 surabaya">
+                <div class="w-100 text-center">
+                    <h1 class="kop-soal-title">{{$nilai->ujian->title}}</h1>
                 </div>
             </div>
             <div class="title-page">
-                <p>PILIHLAH SATU JAWABAN YANG PALING BENAR!</p>
+                <p>PILIHLAH SATU JAWABAN YANG DIANGGAP BENAR!</p>
             </div>
             <table class="m-1">
                 <tr>
-                    <td>Nama</td>
-                    <td>:</td>
+                    <td style="width: 1px;">Nama</td>
+                    <td style="width: 1px; padding: 0 10px 0 10px;">:</td>
                     <td class="text-uppercase font-weight-bold">{{ Auth::guard('siswa')->user()->nama }}</td>
                 </tr>
                 <tr>
                     <td>NIS</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td>{{ Auth::guard('siswa')->user()->nis }}</td>
                 </tr>
                 <tr>
                     <td>Kelas</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td class="text-uppercase">{{ Auth::guard('siswa')->user()->subKelas->kelas->nama_kelas }} - {{ Auth::guard('siswa')->user()->subKelas->sub_kelas }}</td>
                 </tr>
                 <tr>
-                    <td>Ujian</td>
-                    <td>:</td>
-                    <td>{{$nilai->ujian->title}}</td>
-                </tr>
-                <tr>
                     <td>Waktu</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td>{{$nilai->ujian->waktu_ujian}} Menit</td>
                 </tr>
                 <tr>
                     <td>Mapel</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td>{{$nilai->ujian->jadwalBM->mapel->nama_mapel}}</td>
                 </tr>
 
             </table>
             <hr>
             <div class="card-body">
-                <form id="myForm" action="{{ route('penilaian.pg.store') }}" method="post" onsubmit="return validasiForm()">
+                <form id="myForm" action="{{ route('penilaian.pg.store') }}" method="post">
                     @csrf
                     <input type="hidden" name="nilai_id" value="{{$nilai->id}}">
-                    <input type="hidden" name="keterlambatan" value="-" id="keterlambatan">
                     @foreach($nilai->jawaban as $data)
-                    <table>
-                        <tr id="error{{$loop->iteration}}">
-                            <td style="width: 100%;" colspan="2">
-                                <span id="noSoal{{$loop->iteration}}" class="font-weight-bold badge badge-light-danger">Soal No. {{$loop->iteration}}</span>
-                                <div class="ql-editor" style="white-space: normal;">
-                                    @if($data->soal->image)
-                                    <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
-                                    @endif
-                                    {!! $data->soal->soal !!}
-                                </div>
-                            </td>
-                        </tr>
-                        <?php $i = $loop->iteration ?>
-                        @foreach($data->detailJawaban as $jawaban)
-                        <tr>
-                            <td style="padding-left:15px; white-space: normal;" class="ql-editor">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="jawaban[<?= $i - 1 ?>]" class="custom-control-input jawaban<?= $i ?>" value="{{$jawaban->id}}" />
-                                    <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
-                                        @if($jawaban->detailSoal->image)
-                                        <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
+                    <input id="jawaban_hidden{{$loop->iteration}}" type="hidden" name="jawaban[]">
+                    <div class="card-soal mb-1" id="error{{$loop->iteration}}">
+                        <p style="width: 100%; margin: 0;" id="noSoal{{$loop->iteration}}" class="font-weight-bold badge badge-light-danger">Soal No. {{$loop->iteration}}</p>
+                        <table>
+                            <tr>
+                                <td style="width: 100%;" colspan="2">
+                                    <div class="ql-editor" style="white-space: normal;">
+                                        @if($data->soal->image)
+                                        <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
                                         @endif
-                                        {!! $jawaban->detailSoal->jawaban !!}
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
-                    <hr>
+                                        {!! $data->soal->soal !!}
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php $i = $loop->iteration ?>
+                            @foreach($data->detailJawaban as $jawaban)
+                            <tr>
+                                <td style="padding-left:15px; white-space: normal;" class="ql-editor">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="check[<?= $i ?>]" class="custom-control-input jawaban<?= $i ?>" value="{{$jawaban->id}}" />
+                                        <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
+                                            @if($jawaban->detailSoal->image)
+                                            <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
+                                            @endif
+                                            {!! $jawaban->detailSoal->jawaban !!}
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
                     @endforeach
-                    <button class="btn-selesai btn btn-primary waves-effect waves-float waves-light" type="button">Selesai</button>
+                    <button class="btn-selesai btn-sm btn btn-primary waves-effect waves-float waves-light" type="button">Selesai</button>
                 </form>
             </div>
         </div>
@@ -184,21 +178,15 @@
             if (distance > 0) {
                 document.getElementById("durasi").innerHTML = days + " : " + hours + " : " +
                     minutes + " : " + seconds;
-            }
-
-            if (distance < 0) {
-                document.getElementById("durasi").innerHTML = "Terlambat " + Math.abs(days + 1) + " : " + Math.abs(hours + 1) + " : " +
-                    Math.abs(minutes + 1) + " : " + Math.abs(seconds);
-                var element = document.getElementById("durasi");
-                element.classList.add("badge-warning");
-                element.classList.remove("badge-info");
-                var html = Math.abs(days + 1) + " : " + Math.abs(hours + 1) + " : " + Math.abs(minutes + 1) + " : " + Math.abs(seconds);
-                $('#keterlambatan').val(html);
+            } else {
+                clearInterval(x);
+                $('#myForm').submit();
             }
         }, 1000);
 
         for (let index = 1; index <= "{{$nilai->jawaban->count()}}"; index++) {
             $(`.jawaban${index}`).on('change', function() {
+                $(`#jawaban_hidden${index}`).val(this.value);
                 $(`#noSoal${index}`).addClass("badge-light-success").removeClass("badge-light-danger");
             });
         }
@@ -224,12 +212,11 @@
 
                     Toast.fire({
                         icon: 'warning',
-                        title: 'Harap pilih jawaban!'
+                        title: `Harap pilih jawaban No. ${index} !`
                     })
                     return false;
                 }
             }
-            $('#loading').removeClass('d-none');
             return true;
         }
     </script>
@@ -244,10 +231,14 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Simpan!'
+                confirmButtonText: 'Ya, Simpan!',
+                cancelButtonText: 'Batal!',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#myForm').submit();
+                    if (validasiForm()) {
+                        $('#loading').removeClass('d-none');
+                        $('#myForm').submit();
+                    }
                 }
             })
         });

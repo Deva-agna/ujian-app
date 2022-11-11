@@ -14,7 +14,6 @@ class Nilai extends Model
         'siswa_id',
         'start',
         'end',
-        'keterlambatan',
         'nilai',
         'benar',
         'salah',

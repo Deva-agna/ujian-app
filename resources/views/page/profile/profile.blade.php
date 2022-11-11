@@ -25,7 +25,7 @@
         <div class="col-12">
             <div class="card profile-header mb-2">
                 <!-- profile cover photo -->
-                <img class="card-img-top" src="../../../app-assets/images/profile/user-uploads/timeline.jpg" alt="User Profile Image" />
+                <img class="card-img-top" src="{{ asset('app-assets/images/profile/user-uploads/timeline.jpg') }}" alt="User Profile Image" />
                 <!--/ profile cover photo -->
 
                 <div class="position-relative">
@@ -96,8 +96,34 @@
 @endsection
 
 @section('script')
-
 <script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
+
+<script>
+    const imgPreview = document.querySelector('#account-upload-img');
+    const src = imgPreview.src;
+
+    function previewImag() {
+        const image = document.querySelector('#account-upload');
+        if (image.files[0].size > 2 * 1048576) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                text: 'Gambar yang diunggah maksimal 2 MB!',
+            })
+            image.value = "";
+            imgPreview.src = src;
+        } else {
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+    }
+</script>
 
 @if(session()->has('sukses'))
 <script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JadwalBM;
+use App\Models\Nilai;
 use App\Models\TahunAjaran;
 use App\Models\Ujian;
 use Carbon\Carbon;
@@ -26,38 +27,19 @@ class UjianController extends Controller
             return datatables()->of($ujian_s)
                 ->addIndexColumn()
                 ->addColumn('mapel', function ($row) {
-                    $mapel = '<span class="text-uppercase">' . $row->jadwalBM->mapel->nama_mapel . '</span>';
-                    return $mapel;
-                })
-                ->addColumn('kelas', function ($row) {
-                    $kelas = '<span class="text-uppercase">' . $row->jadwalBM->subKelas->kelas->nama_kelas . '</span>';
-                    return $kelas;
+                    $title = '<div style="font-size:12px;"><span class="text-uppercase">' . $row->title . '</span><hr style="margin:0;">';
+                    $title .= '<span class="text-uppercase" style="font-size:11px;">' . $row->jadwalBM->mapel->nama_mapel . '</span><hr style="margin:0;">';
+                    $title .= '<span class="text-uppercase" style="font-size:11px;">' . Carbon::parse($row->waktu_mulai)->format('d/m H:i') . ' - ' . Carbon::parse($row->waktu_selesai)->format('d/m H:i') . '</span></div>';
+                    return $title;
                 })
                 ->addColumn('sub_kelas', function ($row) {
-                    $sub_kelas = '<span class="text-uppercase">' . $row->jadwalBM->subKelas->sub_kelas . '</span>';
+                    $sub_kelas = '<div style="font-size:12px;"><span class="text-uppercase">' . $row->jadwalBM->subKelas->kelas->nama_kelas . '</span><hr style="margin:0;">';
+                    $sub_kelas .= '<span class="text-uppercase">' . $row->jadwalBM->subKelas->sub_kelas . '</span></div>';
                     return $sub_kelas;
-                })
-                ->addColumn('waktu_mulai', function ($row) {
-                    $waktu_mulai = Carbon::parse($row->waktu_mulai)->format('d, M Y H:i');
-                    return $waktu_mulai;
-                })
-                ->addColumn('waktu_selesai', function ($row) {
-                    $waktu_selesai = Carbon::parse($row->waktu_selesai)->format('d, M Y H:i');
-                    return $waktu_selesai;
                 })
                 ->addColumn('waktu_ujian', function ($row) {
                     $waktu_ujian = $row->waktu_ujian . ' Menit';
                     return $waktu_ujian;
-                })
-                ->addColumn('type', function ($row) {
-                    if ($row->type_ujian == 'pg') {
-                        $type = 'Pilihan Ganda';
-                    } elseif ($row->type_ujian == 'mc') {
-                        $type = 'Multiple Choice';
-                    } else {
-                        $type = 'Essay';
-                    }
-                    return $type;
                 })
                 ->addColumn('status', function ($row) {
                     date_default_timezone_set("Asia/Jakarta");
@@ -74,7 +56,7 @@ class UjianController extends Controller
                     return $status;
                 })
                 ->addColumn('action', 'ujian.action')
-                ->rawColumns(['mapel', 'kelas', 'sub_kelas', 'waktu_mulai', 'waktu_selesai', 'waktu_ujian', 'type', 'status', 'action'])
+                ->rawColumns(['mapel', 'sub_kelas', 'waktu_ujian', 'status', 'action'])
                 ->make(true);
         }
         return view('ujian.index');

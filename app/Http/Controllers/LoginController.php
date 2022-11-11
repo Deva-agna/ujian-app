@@ -11,12 +11,12 @@ class LoginController extends Controller
     {
         if (Auth::guard('web')->check()) {
             if (Auth::guard('web')->user()->role == 'guru') {
-                return redirect()->intended('/dashboard/guru');
+                return redirect()->intended('/ujian');
             } else {
                 return redirect()->intended('/dashboard/admin');
             }
         } elseif (Auth::guard('siswa')->check()) {
-            return redirect('/dashboard/siswa');
+            return redirect('/daftar/ujian/siswa');
         }
         return view('index');
     }
@@ -33,12 +33,12 @@ class LoginController extends Controller
 
         if (Auth::guard('web')->attempt(['nip' => $request->nip_nis, 'password' => $request->password])) {
             if (Auth::guard('web')->user()->role == 'guru') {
-                return redirect()->intended('/dashboard/guru');
+                return redirect()->intended('/ujian');
             } else {
                 return redirect()->intended('/dashboard/admin');
             }
         } elseif (Auth::guard('siswa')->attempt(['nis' => $request->nip_nis, 'password' => $request->password, 'status' => true])) {
-            return redirect()->intended('/dashboard/siswa');
+            return redirect()->intended('/daftar/ujian/siswa');
         }
 
         return back()->with('error', 'login gagal');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Models\SubKelas;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NaikKelasController extends Controller
@@ -27,6 +28,7 @@ class NaikKelasController extends Controller
                 Siswa::where('slug', $request->siswa[$i])->update([
                     'sub_kelas_id' => null,
                     'status' => false,
+                    'lulus' => Carbon::now()->format('Y')
                 ]);
             }
         } else {

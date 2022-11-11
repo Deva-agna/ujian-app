@@ -101,8 +101,8 @@
                                 <hr>
                             </div>
                         </div>
-                        <a href="{{ route('soal.mc.list', $ujian->slug) }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button id="btn-submit" class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('soal.mc.list', $ujian->slug) }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button id="btn-submit" class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </div>
             </form>

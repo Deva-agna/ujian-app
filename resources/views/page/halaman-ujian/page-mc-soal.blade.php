@@ -36,15 +36,13 @@
         <div class="loading-submit">
         </div>
     </div>
-    <span id="durasi" class="badge badge-info fixed-top" style="border-radius: 0;">0d 0h 0m 0s</span>
+    <span id="durasi" class="badge badge-info fixed-top" style="border-radius: 0;">0 : 0 : 0 : 0</span>
     <section id="container">
-        <div class="card mt-3">
-            <div class="card-header pb-0 d-flex justify-content-between">
-                <div>
-                    <img src="{{ asset('app-assets/images/logo_majelis_pendidikan.png') }}" width="100" alt="logo majelis">
-                </div>
-                <div>
-                    <img src="{{ asset('app-assets/images/logo_mi_muhammadiyah_23_surabaya-removebg-preview.png') }}" width="100" alt="logo mim 23 surabaya">
+        <div class="card card-custome mt-3">
+            <div class="kop-soal pb-0 d-flex justify-content-between align-items-center">
+                <img class="kop-soal-img" src="{{ asset('app-assets/images/logo_mi_muhammadiyah_23_surabaya-removebg-preview.png') }}" alt="logo mim 23 surabaya">
+                <div class="w-100 text-center">
+                    <h1 class="kop-soal-title">{{$nilai->ujian->title}}</h1>
                 </div>
             </div>
             <div class="title-page">
@@ -53,77 +51,73 @@
             <table class="m-1">
                 <tr>
                     <td style="width: 1px;">Nama</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px; width: 1px;">:</td>
                     <td class="text-uppercase font-weight-bold">{{ Auth::guard('siswa')->user()->nama }}</td>
                 </tr>
                 <tr>
                     <td>NIS</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td>{{ Auth::guard('siswa')->user()->nis }}</td>
                 </tr>
                 <tr>
                     <td>Kelas</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td class="text-uppercase">{{ Auth::guard('siswa')->user()->subKelas->kelas->nama_kelas }} - {{ Auth::guard('siswa')->user()->subKelas->sub_kelas }}</td>
                 </tr>
                 <tr>
-                    <td>Ujian</td>
-                    <td>:</td>
-                    <td>{{$nilai->ujian->title}}</td>
-                </tr>
-                <tr>
                     <td>Waktu</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td>{{$nilai->ujian->waktu_ujian}} Menit</td>
                 </tr>
                 <tr>
                     <td>Mapel</td>
-                    <td>:</td>
+                    <td style="padding: 0 10px 0 10px;">:</td>
                     <td>{{$nilai->ujian->jadwalBM->mapel->nama_mapel}}</td>
                 </tr>
 
             </table>
             <hr>
             <div class="card-body">
-                <form id="myForm" action="{{ route('penilaian.mc.store') }}" method="post" onsubmit="return validasiForm()">
+                <form id="myForm" action="{{ route('penilaian.mc.store') }}" method="post">
                     @csrf
                     @method('put')
                     <input type="hidden" name="nilai_id" value="{{$nilai->id}}">
-                    <input type="hidden" name="keterlambatan" value="-" id="keterlambatan">
+                    <input type="hidden" name="jumlah_soal" id="jumlah_soal">
                     @foreach($nilai->jawaban as $data)
-                    <table>
-                        <tr id="error{{$loop->iteration}}">
-                            <td style="width: 100%;" colspan="2">
-                                <span id="noSoal{{$loop->iteration}}" class="font-weight-bold badge badge-light-danger">Soal No. {{$loop->iteration}}</span>
-                                <p class="informasi{{$loop->iteration}} mt-1" style="display: none;"><i id="icon-informasi{{$loop->iteration}}" class="fa-solid fa-triangle-exclamation"></i> Pilih {{ $data->soal->detailSoal->where('kunci_jawaban', true)->count() }} jawaban yang anda anggap benar!</p>
-                                <div class="ql-editor" style="white-space: normal;">
-                                    @if($data->soal->image)
-                                    <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block" width="200px">
-                                    @endif
-                                    {!! $data->soal->soal !!}
-                                </div>
-                            </td>
-                        </tr>
-                        <?php $i = $loop->iteration ?>
-                        @foreach($data->detailJawaban as $jawaban)
-                        <tr>
-                            <td style="padding-left:15px; white-space: normal;" class="ql-editor">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="jawaban<?= $i ?> custom-control-input" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="jawaban[]" value="{{$jawaban->id}}">
-                                    <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
-                                        @if($jawaban->detailSoal->image)
-                                        <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px">
+                    <div class="card-soal mb-1" id="error{{$loop->iteration}}">
+                        <p style="width: 100%; margin: 0;" id="noSoal{{$loop->iteration}}" class="font-weight-bold badge badge-light-danger">Soal No. {{$loop->iteration}}</p>
+                        <table>
+                            <tr>
+                                <td style="width: 100%;" colspan="2">
+                                    <p class="informasi{{$loop->iteration}} mt-1" style="display: none; margin-left: 10px;"><i id="icon-informasi{{$loop->iteration}}" class="fa-solid fa-triangle-exclamation"></i> Pilih {{ $data->soal->detailSoal->where('kunci_jawaban', true)->count() }} jawaban yang anda anggap benar!</p>
+                                    <div class="ql-editor" style="white-space: normal;">
+                                        @if($data->soal->image)
+                                        <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block" width="200px" style="cursor: pointer;">
                                         @endif
-                                        {!! $jawaban->detailSoal->jawaban !!}
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </table>
-                    <hr>
+                                        {!! $data->soal->soal !!}
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php $i = $loop->iteration ?>
+                            @foreach($data->detailJawaban as $jawaban)
+                            <tr>
+                                <td style="padding-left:15px; white-space: normal;" class="ql-editor">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="jawaban<?= $i ?> custom-control-input" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="jawaban[]" value="{{$jawaban->id}}">
+                                        <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
+                                            @if($jawaban->detailSoal->image)
+                                            <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
+                                            @endif
+                                            {!! $jawaban->detailSoal->jawaban !!}
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
                     @endforeach
-                    <button class="btn-selesai btn btn-primary waves-effect waves-float waves-light" type="submit">Selesai</button>
+                    <button class="btn-selesai btn-sm btn btn-primary waves-effect waves-float waves-light" type="submit">Selesai</button>
                 </form>
             </div>
         </div>
@@ -167,38 +161,9 @@
     </script>
 
     <script>
-        var waktuMulai = new Date("{{$nilai->start}}").getTime();
-        var menit = "{{$nilai->ujian->waktu_ujian}}";
-        var waktuSelesai = new Date(waktuMulai + menit * 60000);
-
-        var x = setInterval(function() {
-            var now = new Date().getTime();
-            var distance = waktuSelesai - now;
-
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            if (distance > 0) {
-                document.getElementById("durasi").innerHTML = days + " : " + hours + " : " +
-                    minutes + " : " + seconds;
-            }
-
-            if (distance < 0) {
-                document.getElementById("durasi").innerHTML = "Terlambat " + Math.abs(days + 1) + " : " + Math.abs(hours + 1) + " : " +
-                    Math.abs(minutes + 1) + " : " + Math.abs(seconds);
-                var element = document.getElementById("durasi");
-                element.classList.add("badge-warning");
-                var html = Math.abs(days + 1) + " : " + Math.abs(hours + 1) + " : " + Math.abs(minutes + 1) + " : " + Math.abs(seconds);
-                $('#keterlambatan').val(html);
-            }
-        }, 1000);
-    </script>
-
-    <script>
         let jawabanTrue = [];
         $(document).ready(function() {
+            let jumlah_soal = 0;
             var panjang = "{{ $nilai->jawaban->count() }}";
             let i = 1;
             <?php foreach ($nilai->jawaban as $data) { ?>
@@ -206,12 +171,14 @@
                 <?php foreach ($data->detailJawaban as $list) { ?>
                     <?php if ($list->detailSoal->kunci_jawaban) { ?>
                         limit++;
+                        jumlah_soal++;
                     <?php } ?>
                 <?php } ?>
                 jawabanTrue[i - 1] = limit;
                 checkCheckbox(i, limit);
                 i++;
             <?php } ?>
+            $('#jumlah_soal').val(jumlah_soal);
         });
 
         function checkCheckbox(index, limit) {
@@ -280,12 +247,36 @@
                 cancelButtonText: 'Batal',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $('#myForm').submit();
+                    if (validasiForm()) {
+                        $('#myForm').submit();
+                    }
                 }
             })
         });
-    </script> -->
+    </script>
+    <script>
+        var waktuMulai = new Date("{{$nilai->start}}").getTime();
+        var menit = "{{$nilai->ujian->waktu_ujian}}";
+        var waktuSelesai = new Date(waktuMulai + menit * 60000);
 
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = waktuSelesai - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance > 0) {
+                document.getElementById("durasi").innerHTML = days + " : " + hours + " : " +
+                    minutes + " : " + seconds;
+            } else {
+                clearInterval(x);
+                $('#myForm').submit();
+            }
+        }, 1000);
+    </script>
 </body>
 
 </html>

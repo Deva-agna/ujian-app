@@ -38,7 +38,7 @@
                         </div>
                         <div class="form-group">
                             <label for="kelas">Kelas <span class="text-danger">*</span></label>
-                            <select name="sub_kelas" class="form-control form-control-sm @error('sub_kelas') is-invalid @enderror" id="sub_kelas">
+                            <select name="sub_kelas" class="text-uppercase form-control form-control-sm @error('sub_kelas') is-invalid @enderror" id="sub_kelas">
                                 <option value="">Pilih</option>
                                 @foreach($sub_kelas_s as $sub_kelas)
                                 <option class="text-uppercase" {{ old('sub_kelas', $siswa->sub_kelas_id) == $sub_kelas->id ? 'selected' : '' }} value="{{$sub_kelas->id}}">{{$sub_kelas->sub_kelas}} | {{ $sub_kelas->kelas->nama_kelas }}</option>
@@ -50,8 +50,8 @@
                             </div>
                             @enderror
                         </div>
-                        <a href="{{ route('siswa') }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('siswa') }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

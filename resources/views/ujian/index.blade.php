@@ -37,24 +37,20 @@
                     <h4 class="card-title">List Ujian</h4>
                     <div class="dt-action-buttons text-right">
                         <div class="dt-buttons d-inline-flex">
-                            <a href="{{route('ujian.create')}}" class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <a href="{{route('ujian.create')}}" class="dt-button create-new btn-sm btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <i class="fa-solid fa-plus"></i> <span>Tambah Ujian</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="table-responsive pl-2 pr-2">
-                    <table class="table" id="table_data">
+                    <table class="table table-striped" id="table_data">
                         <thead>
                             <tr role="row">
-                                <th>Mapel</th>
+                                <th>Title</th>
                                 <th>Kelas</th>
-                                <th>Ruang</th>
-                                <th>Mulai</th>
-                                <th>Selesai</th>
                                 <th>Durasi</th>
                                 <th>Token</th>
-                                <th>Tipe</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -82,28 +78,13 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('ujian') }}",
-            order: [
-                [3, 'desc']
-            ],
             columns: [{
                     data: 'mapel',
                     name: 'mapel'
                 },
                 {
-                    data: 'kelas',
-                    name: 'kelas'
-                },
-                {
                     data: 'sub_kelas',
                     name: 'sub_kelas'
-                },
-                {
-                    data: 'waktu_mulai',
-                    name: 'waktu_mulai'
-                },
-                {
-                    data: 'waktu_selesai',
-                    name: 'waktu_selesai'
                 },
                 {
                     data: 'waktu_ujian',
@@ -112,10 +93,6 @@
                 {
                     data: 'token',
                     name: 'token'
-                },
-                {
-                    data: 'type',
-                    name: 'type'
                 },
                 {
                     data: 'status',

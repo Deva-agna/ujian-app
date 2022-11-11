@@ -5,7 +5,6 @@ use App\Http\Controllers\DetailSoalController;
 use App\Http\Controllers\DetailUjianController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalBMController;
-use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\NaikKelasController;
@@ -102,10 +101,13 @@ Route::group(['middleware' => ['auth:web', 'checkRole:admin']], function () {
     Route::get('/naik-kelas', [NaikKelasController::class, 'index'])->name('naik.kelas');
     Route::get('/naik-kelas/{slug}/view', [NaikKelasController::class, 'view'])->name('naik.kelas.view');
     Route::post('/naik-kelas/store', [NaikKelasController::class, 'store'])->name('naik.kelas.store');
+    //----------------------
+    // Route Alumni
+    //----------------------
+    Route::get('/alumni', [SiswaController::class, 'alumni'])->name('alumni');
 });
 
 Route::group(['middleware' => ['auth:web', 'checkRole:guru']], function () {
-    Route::get('/dashboard/guru', [PageController::class, 'dashboardGuru'])->name('dashboard-guru');
     //----------------------
     // Kelola Ujian
     //----------------------
@@ -172,7 +174,6 @@ Route::group(['middleware' => ['auth:web', 'checkRole:guru']], function () {
     Route::get('/print/{nilai:id}/jawaban', [UjianSelesaiController::class, 'printJawaban'])->name('print.jawaban');
     Route::get('/preview/{nilai:id}/essay', [UjianSelesaiController::class, 'previewEssay'])->name('preview.essay');
     Route::get('/preview-jawaban/{nilai:id}/essay', [UjianSelesaiController::class, 'printJawabanEssay'])->name('print.jawaban.essay');
-    // Route::get('/download/{nilai:id}/jawaban', [UjianSelesaiController::class, 'downloadPdf'])->name('download.jawaban');
     //----------------------
     // Route menilai jawaban siswa (essay)
     //----------------------
@@ -181,7 +182,6 @@ Route::group(['middleware' => ['auth:web', 'checkRole:guru']], function () {
 });
 
 Route::group(['middleware' => ['auth:siswa', 'checkRole:siswa']], function () {
-    Route::get('/dashboard/siswa', [PageController::class, 'dashboardSiswa'])->name('dashboard.siswa');
     Route::get('/daftar/ujian/siswa', [PageController::class, 'halamanUjianIndex'])->name('daftar.ujian.siswa');
     Route::get('/page/{slug}/konfirmasi-token', [PageController::class, 'pageKonfirmasiToken'])->name('page.konfirmasi.token');
     Route::put('/check/token', [PageController::class, 'checkToken'])->name('check.token');
@@ -194,4 +194,9 @@ Route::group(['middleware' => ['auth:siswa', 'checkRole:siswa']], function () {
     // Route profile siswa
     Route::get('/profile/siswa', [ProfileSisawaController::class, 'index'])->name('profile.siswa');
     Route::post('/profile/siswa/store', [ProfileSisawaController::class, 'store'])->name('profile.siswa.store');
+
+    // Route Ujian Selesai
+    Route::get('/list/ujian/selesai', [UjianSelesaiController::class, 'listUjianSelesai'])->name('list.ujian.selesai');
+    Route::get('/preview-jawaban/{nilai:id}/siswa', [UjianSelesaiController::class, 'previewJawabanSiswa'])->name('preview.jawaban.siswa');
+    Route::get('/preview-jawaban-essay/{nilai:id}/siswa', [UjianSelesaiController::class, 'previewJawabanEssaySiswa'])->name('preview.jawaban.essay.siswa');
 });

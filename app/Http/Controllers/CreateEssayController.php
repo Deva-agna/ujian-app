@@ -14,7 +14,7 @@ class CreateEssayController extends Controller
         for ($i = 0; $i < count($request->jawaban); $i++) {
             $gambar = "";
             if ($request->cek_gambar[$i]) {
-                $gambar = $request->gambar[$i]->getClientOriginalName() . '.' . time() . '.' . $request->gambar[$i]->extension();
+                $gambar = Str::random(20) . '.' . time() . '.' . $request->gambar[$i]->extension();
                 $request->gambar[$i]->move(public_path('gambar-jawaban'), $gambar);
             }
 
@@ -26,7 +26,6 @@ class CreateEssayController extends Controller
 
         Nilai::where('id', $request->nilai_id)->update([
             'status' => true,
-            'keterlambatan' => $request->keterlambatan,
         ]);
 
         return view('page.ujian-done');

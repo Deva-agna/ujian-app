@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\DetailJawaban;
 use App\Models\DetailJawabanEssay;
-use App\Models\DetailSoal;
 use App\Models\Nilai;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class PenilaianController extends Controller
 {
@@ -21,13 +19,15 @@ class PenilaianController extends Controller
             $benar = 0;
             $salah = 0;
             for ($i = 0; $i < count($request->jawaban); $i++) {
-                $check = DetailJawaban::where('id', $request->jawaban[$i])->first();
-                if ($check->detailSoal->kunci_jawaban) {
-                    $benar += 1;
+                if ($check = DetailJawaban::where('id', $request->jawaban[$i])->first()) {
+                    if ($check->detailSoal->kunci_jawaban) {
+                        $benar += 1;
+                    } else {
+                        $salah += 1;
+                    }
                 } else {
                     $salah += 1;
                 }
-
                 DetailJawaban::where('id', $request->jawaban[$i])->update([
                     'status' => true,
                 ]);
@@ -37,7 +37,6 @@ class PenilaianController extends Controller
 
             Nilai::where('id', $request->nilai_id)->update([
                 'status' => true,
-                'keterlambatan' => $request->keterlambatan,
                 'nilai' => $hasil,
                 'benar' => $benar,
                 'salah' => $salah,
@@ -49,34 +48,42 @@ class PenilaianController extends Controller
 
     public function penilaianMc(Request $request)
     {
-        $nilai = Nilai::where('id', $request->nilai_id)->first();
+        if ($request->jawaban) {
+            $nilai = Nilai::where('id', $request->nilai_id)->first();
 
-        if ($nilai->status) {
-            return view('page.ujian-done');
-        } else {
-            $benar = 0;
-            $salah = 0;
-            for ($i = 0; $i < count($request->jawaban); $i++) {
-                $check = DetailJawaban::where('id', $request->jawaban[$i])->first();
-                if ($check->detailSoal->kunci_jawaban) {
-                    $benar += 1;
-                } else {
-                    $salah += 1;
+            if ($nilai->status) {
+                return view('page.ujian-done');
+            } else {
+                $benar = 0;
+                $salah = 0;
+                for ($i = 0; $i < count($request->jawaban); $i++) {
+                    $check = DetailJawaban::where('id', $request->jawaban[$i])->first();
+                    if ($check->detailSoal->kunci_jawaban) {
+                        $benar += 1;
+                    }
+
+                    DetailJawaban::where('id', $request->jawaban[$i])->update([
+                        'status' => true,
+                    ]);
                 }
+                $salah = $request->jumlah_soal - $benar;
+                $hasil = ($benar / $request->jumlah_soal) * 100;
 
-                DetailJawaban::where('id', $request->jawaban[$i])->update([
+                Nilai::where('id', $request->nilai_id)->update([
                     'status' => true,
+                    'nilai' => number_format($hasil, 2),
+                    'benar' => $benar,
+                    'salah' => $salah,
                 ]);
+
+                return view('page.ujian-done');
             }
-
-            $hasil = ($benar / count($request->jawaban)) * 100;
-
+        } else {
             Nilai::where('id', $request->nilai_id)->update([
                 'status' => true,
-                'keterlambatan' => $request->keterlambatan,
-                'nilai' => number_format($hasil, 2),
-                'benar' => $benar,
-                'salah' => $salah,
+                'nilai' => '0',
+                'benar' => '0',
+                'salah' => $request->jumlah_soal,
             ]);
 
             return view('page.ujian-done');

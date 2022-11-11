@@ -17,8 +17,8 @@ class CreateUjiansTable extends Migration
             $table->id();
             $table->foreignId('jadwal_b_m_id')->constrained('jadwal_b_m_s');
             $table->string('title');
-            $table->string('waktu_mulai');
-            $table->string('waktu_selesai');
+            $table->dateTime('waktu_mulai');
+            $table->dateTime('waktu_selesai');
             $table->string('waktu_ujian');
             $table->string('type_ujian');
             $table->string('token');

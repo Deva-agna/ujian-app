@@ -52,7 +52,8 @@
             serverSide: true,
             ajax: "{{ route('dashboard.siswa') }}",
             order: [
-                [1, 'asc']
+                [0, 'asc'],
+                [2, 'asc'],
             ],
             columns: [{
                     data: 'hari',

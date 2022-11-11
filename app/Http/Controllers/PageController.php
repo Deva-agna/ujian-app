@@ -12,7 +12,6 @@ use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Siswa;
-use App\Models\TahunAjaran;
 use App\Models\Ujian;
 use App\Models\User;
 use Carbon\Carbon;
@@ -31,71 +30,6 @@ class PageController extends Controller
         $kelas = Kelas::count();
         $mapel = Mapel::count();
         return view('page.dashboard-admin', compact('guru', 'siswa', 'kelas', 'mapel'));
-    }
-
-    public function dashboardGuru()
-    {
-        $tahun_ajaran = TahunAjaran::where('status', true)->first();
-        if ($tahun_ajaran) {
-            $jadwalBM_s = JadwalBM::with(['subKelas.kelas', 'mapel'])->where('user_id', Auth::guard('web')->user()->id)->where('tahun_ajaran_id', $tahun_ajaran->id)->get();
-        } else {
-            $jadwalBM_s = [];
-        }
-        if (request()->ajax()) {
-            return datatables()->of($jadwalBM_s)
-                ->addIndexColumn()
-                ->addColumn('kelas', function ($row) {
-                    $kelas = $row->subKelas->kelas->nama_kelas;
-                    return $kelas;
-                })
-                ->addColumn('sub_kelas', function ($row) {
-                    $kelas = $row->subKelas->sub_kelas;
-                    return $kelas;
-                })
-                ->addColumn('mapel', function ($row) {
-                    $mapel = $row->mapel->nama_mapel;
-                    return $mapel;
-                })
-                ->addColumn('jam', function ($row) {
-                    $jam = $row->jam_mulai . ' - ' . $row->jam_selesai;
-                    return $jam;
-                })
-                ->rawColumns(['kelas', 'sub_kelas', 'mapel', 'jam'])
-                ->make(true);
-        }
-        return view('page.dashboard-guru');
-    }
-
-    public function dashboardSiswa()
-    {
-
-        $tahun_ajaran = TahunAjaran::where('status', true)->first();
-        if ($tahun_ajaran) {
-            $jadwalBM_s = JadwalBM::with('user', 'mapel')->where('tahun_ajaran_id', $tahun_ajaran->id)->where('sub_kelas_id', Auth::guard('siswa')->user()->sub_kelas_id)->get();
-        } else {
-            $jadwalBM_s = [];
-        }
-
-        if (request()->ajax()) {
-            return datatables()->of($jadwalBM_s)
-                ->addIndexColumn()
-                ->addColumn('mapel', function ($row) {
-                    $mapel = $row->mapel->nama_mapel;
-                    return $mapel;
-                })
-                ->addColumn('jam', function ($row) {
-                    $jam = $row->jam_mulai . ' - ' . $row->jam_selesai;
-                    return $jam;
-                })
-                ->addColumn('pengajar', function ($row) {
-                    $pengajar = $row->user->nama;
-                    return $pengajar;
-                })
-                ->rawColumns(['mapel', 'jam', 'pengajar'])
-                ->make(true);
-        }
-
-        return view('page.dashboard-siswa');
     }
 
     public function profile()
@@ -276,16 +210,18 @@ class PageController extends Controller
                     } else {
                         $detailSoal = DetailSoal::where('soal_id', $soal->soal_id)->get();
 
-                        foreach ($detailSoal as $jawaban) {
-                            DetailJawaban::create([
+                        $data = [];
+
+                        foreach ($detailSoal as $key =>  $jawaban) {
+                            $data[] = [
                                 'jawaban_id' => $jawaban_id->id,
-                                'detail_soal_id' => $jawaban->id,
-                            ]);
+                                'detail_soal_id' => $jawaban->id
+                            ];
                         }
+
+                        DetailJawaban::insert($data);
                     }
                 }
-
-
 
                 if ($ujian->type_ujian == 'pg') {
                     return view('page.halaman-ujian.page-soal', compact('nilai'));

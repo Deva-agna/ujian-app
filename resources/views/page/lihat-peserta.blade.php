@@ -23,7 +23,6 @@
                             <th>NIS</th>
                             <th>Mulai</th>
                             <th>Status</th>
-                            <th>Keterlambatan</th>
                             <th>Nilai</th>
                         </tr>
                     </thead>
@@ -34,7 +33,6 @@
                             <td>{{ $data->siswa->nis }}</td>
                             <td>{{ Carbon\Carbon::parse($data->start)->format('d, M Y H:i') }}</td>
                             <td><span class="badge  {{$data->status ? 'badge-info' : 'badge-warning'}}">{{$data->status ? 'Selesai' : 'Belum Selesai'}}</span></td>
-                            <td>{{ $data->keterlambatan }}</td>
                             <td>{{ $data->nilai == '-' ? '-' : number_format($data->nilai, 2) }}</td>
                         </tr>
                         @endforeach

@@ -43,7 +43,7 @@
                     <h4 class="card-title">Data Guru</h4>
                     <div class="dt-action-buttons text-right">
                         <div class="dt-buttons d-inline-flex">
-                            <a href="{{route('guru.create')}}" class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <a href="{{route('guru.create')}}" class="dt-button create-new btn-sm btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <i class="fa-solid fa-plus"></i> <span>Tambah Guru</span>
                             </a>
                         </div>

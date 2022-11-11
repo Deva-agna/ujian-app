@@ -39,7 +39,6 @@
                                 <th>NIS</th>
                                 <th>Masuk Ujian</th>
                                 <th>Status</th>
-                                <th>Keterlambatan</th>
                                 <th>Nilai</th>
                                 <th>Aksi</th>
                             </tr>
@@ -82,10 +81,6 @@
                 {
                     data: 'status',
                     name: 'status'
-                },
-                {
-                    data: 'keterlambatan',
-                    name: 'keterlambatan'
                 },
                 {
                     data: 'nilai',

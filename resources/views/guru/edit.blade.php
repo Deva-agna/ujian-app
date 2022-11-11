@@ -16,6 +16,7 @@
 @section('page-css')
 <link rel="stylesheet" type="text/css" href=" {{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }} ">
 <link rel="stylesheet" type="text/css" href=" {{ asset('app-assets/css/plugins/forms/pickers/form-pickadate.css') }} ">
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/sweetalert2.min.css') }}">
 @endsection
 
 @section('konten')
@@ -119,19 +120,30 @@
 @endsection
 
 @section('script')
-
+<script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
 <script>
+    const imgPreview = document.querySelector('.img-preview');
+    const src = imgPreview.src;
+
     function previewImage() {
         const image = document.querySelector('#image');
-        const imgPreview = document.querySelector('.img-preview');
+        if (image.files[0].size > 2 * 1048576) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                text: 'Gambar yang diunggah maksimal 2 MB!',
+            })
+            image.value = "";
+            imgPreview.src = src;
+        } else {
+            imgPreview.style.display = 'block';
 
-        imgPreview.style.display = 'block';
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
 
-        const oFReader = new FileReader();
-        oFReader.readAsDataURL(image.files[0]);
-
-        oFReader.onload = function(oFREvent) {
-            imgPreview.src = oFREvent.target.result;
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
         }
     }
 </script>

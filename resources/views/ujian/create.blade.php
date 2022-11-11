@@ -25,11 +25,11 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="jadwal_belajar">Jadwal Belajar <span class="text-danger">*</span></label>
+                            <label for="jadwal_belajar">Ujian Ditujukan Ke <span class="text-danger">*</span></label>
                             <select name="jadwal_belajar" class="@error('jadwal_belajar') is-invalid @enderror form-control form-control-sm text-uppercase" id="jadwal_belajar">
                                 <option value="">Pilih</option>
                                 @foreach($jadwalBM_s as $jadwalBM)
-                                <option class="text-uppercase" {{ old('jadwal_belajar') == $jadwalBM->id ? 'selected' : '' }} value="{{$jadwalBM->id}}">{{ $jadwalBM->subKelas->kelas->nama_kelas }} | {{$jadwalBM->subKelas->sub_kelas}} | {{ $jadwalBM->mapel->nama_mapel }} | {{$jadwalBM->hari}} | {{ $jadwalBM->jam_mulai }} - {{ $jadwalBM->jam_selesai }}</option>
+                                <option class="text-uppercase" {{ old('jadwal_belajar') == $jadwalBM->id ? 'selected' : '' }} value="{{$jadwalBM->id}}">{{ $jadwalBM->subKelas->kelas->nama_kelas }} | {{$jadwalBM->subKelas->sub_kelas}} | {{ $jadwalBM->mapel->nama_mapel }}</option>
                                 @endforeach
                             </select>
                             @error('jadwal_belajar')
@@ -69,9 +69,9 @@
                             <label for="type_ujian">Tipe Ujian <span class="text-danger">*</span></label>
                             <select name="type_ujian" class="@error('type_ujian') is-invalid @enderror form-control form-control-sm text-uppercase" id="type_ujian">
                                 <option value="">Pilih</option>
-                                <option class="text-uppercase" {{ old('type_ujian') == 'pg' ? 'selected' : '' }} value="pg">PG (Satu Jawaban)</option>
-                                <option class="text-uppercase" {{ old('type_ujian') == 'mc' ? 'selected' : '' }} value="mc">PG (Banyak Jawaban)</option>
-                                <option class="text-uppercase" {{ old('type_ujian') == 'essay' ? 'selected' : '' }} value="essay">essay</option>
+                                <option class="text-uppercase" {{ old('type_ujian') == 'pg' ? 'selected' : '' }} value="pg">PG</option>
+                                <option class="text-uppercase" {{ old('type_ujian') == 'mc' ? 'selected' : '' }} value="mc">PG (Kompleks)</option>
+                                <option class="text-uppercase" {{ old('type_ujian') == 'essay' ? 'selected' : '' }} value="essay">Uraian/Esai</option>
                             </select>
                             @error('type_ujian')
                             <div class="invalid-feedback">
@@ -79,8 +79,8 @@
                             </div>
                             @enderror
                         </div>
-                        <a href="{{ route('ujian') }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('ujian') }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

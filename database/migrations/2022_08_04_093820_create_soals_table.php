@@ -23,7 +23,6 @@ class CreateSoalsTable extends Migration
             $table->string('image');
             $table->string('type_soal');
             $table->boolean('status_update')->default(true);
-            $table->boolean('status_duplikat')->default(false);
             $table->string('slug');
             $table->timestamps();
         });

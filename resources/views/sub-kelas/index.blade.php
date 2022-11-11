@@ -37,7 +37,7 @@
                     <h4 class="card-title">Data Ruang</h4>
                     <div class="dt-action-buttons text-right">
                         <div class="dt-buttons d-inline-flex">
-                            <a href="{{route('sub.kelas.create')}}" class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <a href="{{route('sub.kelas.create')}}" class="dt-button create-new btn-sm btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <i class="fa-solid fa-plus"></i> <span>Tambah Ruang</span>
                             </a>
                         </div>

@@ -13,15 +13,15 @@
                 <div class="media">
                     <a href="javascript:void(0);" class="mr-25">
                         @if(Auth::guard('web')->user()->img)
-                        <img src="{{asset('foto/'. Auth::guard('web')->user()->img)}}" id="account-upload-img" class="rounded mr-50" alt="profile image" width="80">
+                        <img src="{{asset('foto/'. Auth::guard('web')->user()->img)}}" id="account-upload-img" class="rounded mr-50" alt="profile image" width="80" style="object-fit: cover;">
                         @else
-                        <img src="{{asset('app-assets/images/no_image.jpg')}}" id="account-upload-img" class="rounded mr-50" alt="profile image" height="80" width="80">
+                        <img src="{{asset('app-assets/images/no_image.jpg')}}" id="account-upload-img" class="rounded mr-50" alt="profile image" height="80" width="80" style="object-fit: cover;">
                         @endif
                     </a>
                     <!-- upload and reset button -->
                     <div class="media-body mt-75 ml-1">
                         <label for="account-upload" class="btn btn-sm btn-primary mb-75 mr-75 waves-effect waves-float waves-light">Upload</label>
-                        <p>Allowed JPG, GIF or PNG. Max size of 800kB</p>
+                        <p>Maksimal foto yang diuanggah hanya 2MB!</p>
                     </div>
                     <!--/ upload and reset button -->
                 </div>
@@ -31,7 +31,7 @@
                 <form class="mt-2" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
-                    <input type="file" name="image" id="account-upload" hidden="" accept="image/*">
+                    <input type="file" name="image" id="account-upload" hidden="" accept="image/*" onchange="previewImag()">
                     <input type="hidden" name="slug" value="{{Auth::guard('web')->user()->slug}}">
                     <input type="hidden" name="imgOld" value="{{Auth::guard('web')->user()->img}}">
                     <input type="hidden" name="tanggal_lahir_old" value="{{Auth::guard('web')->user()->tanggal_lahir}}">
@@ -101,7 +101,7 @@
                             <textarea name="alamat" class="form-control form-control-sm" id="alamat" rows="2" placeholder="Textarea">{{old('alamat', Auth::guard('web')->user()->alamat)}}</textarea>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary mt-2 mr-1 waves-effect waves-float waves-light">Save changes</button>
+                            <button type="submit" class="btn btn-sm btn-primary mt-2 mr-1 waves-effect waves-float waves-light">Simpan</button>
                         </div>
                     </div>
                 </form>
@@ -112,8 +112,4 @@
     </div>
 </div>
 
-@endsection
-
-@section('page-js')
-<script src="{{asset('app-assets/js/scripts/pages/page-account-settings.js')}}"></script>
 @endsection

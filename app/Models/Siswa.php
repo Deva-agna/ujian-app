@@ -17,6 +17,7 @@ class Siswa extends Authenticatable
         'view_password',
         'role',
         'status',
+        'lulus',
         'slug',
     ];
 

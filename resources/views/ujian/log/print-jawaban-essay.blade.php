@@ -47,12 +47,7 @@
                         <tr>
                             <td>Kelas</td>
                             <td style="padding: 0 15px 0 15px;">:</td>
-                            <td class="text-uppercase">{{ $nilai->siswa->kelas->nama_kelas }}</td>
-                        </tr>
-                        <tr>
-                            <td>Ujian</td>
-                            <td style="padding: 0 15px 0 15px;">:</td>
-                            <td>{{$nilai->ujian->title}}</td>
+                            <td class="text-uppercase">{{ $nilai->siswa->subKelas->kelas->nama_kelas }} | {{ $nilai->siswa->subKelas->sub_kelas }}</td>
                         </tr>
                         <tr>
                             <td>Waktu</td>

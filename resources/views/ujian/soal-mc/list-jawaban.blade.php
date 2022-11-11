@@ -48,7 +48,7 @@
             </tr>
             @endforeach
         </table>
-        <a href="{{ route('soal.mc.list', $soal->detailUjian[0]->ujian->slug) }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
+        <a href="{{ route('soal.mc.list', $soal->detailUjian[0]->ujian->slug) }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
     </div>
 </div>
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\JadwalBM;
-use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\SubKelas;
 use App\Models\TahunAjaran;
@@ -15,7 +14,6 @@ class JadwalBMController extends Controller
 {
     public function index()
     {
-
         $tahun_ajaran = TahunAjaran::where('status', true)->first();
 
         if ($tahun_ajaran) {
@@ -27,28 +25,17 @@ class JadwalBMController extends Controller
                         $nama_guru = $row->user->nama;
                         return $nama_guru;
                     })
-                    ->addColumn('kelas', function ($row) {
-                        $kelas = '<span class="text-uppercase">' . $row->subKelas->kelas->nama_kelas . '</span>';
-                        return $kelas;
-                    })
                     ->addColumn('sub_kelas', function ($row) {
-                        $sub_kelas = '<span class="text-uppercase">' . $row->subKelas->sub_kelas . '</span>';
+                        $sub_kelas = '<div style="font-size:12px;"><span class="text-uppercase">' . $row->subKelas->kelas->nama_kelas . '</span><hr style="margin:0;">';
+                        $sub_kelas .= '<span class="text-uppercase">' . $row->subKelas->sub_kelas . '</span></div>';
                         return $sub_kelas;
                     })
                     ->addColumn('mapel', function ($row) {
                         $mapel = '<span class="text-uppercase">' . $row->mapel->nama_mapel . '</span>';
                         return $mapel;
                     })
-                    ->addColumn('hari', function ($row) {
-                        $hari = '<span class="text-uppercase">' . $row->hari . '</span>';
-                        return $hari;
-                    })
-                    ->addColumn('jam', function ($row) {
-                        $jam = $row->jam_mulai . ' - ' . $row->jam_selesai;
-                        return $jam;
-                    })
                     ->addColumn('action', 'jadwalBM.action')
-                    ->rawColumns(['nama_guru', 'kelas', 'sub_kelas', 'mapel', 'jam', 'action', 'hari'])
+                    ->rawColumns(['nama_guru', 'sub_kelas', 'mapel', 'action'])
                     ->make(true);
             }
         } else {
@@ -72,16 +59,10 @@ class JadwalBMController extends Controller
             'user_id' => 'required',
             'sub_kelas' => 'required',
             'mapel_id' => 'required',
-            'hari' => 'required',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
         ], [
             'user_id.required' => 'Bidang Guru Pengajar wajib diisi.',
             'sub_kelas.required' => 'Bidang Kelas yang diampu wajib diisi.',
             'mapel_id.required' => 'Bidang Mapel yang diampu wajib diisi.',
-            'hari.required' => 'Bidang hari wajib diisi.',
-            'jam_mulai.required' => 'Bidang jam mulai wajib diisi.',
-            'jam_selesai.required' => 'Bidang jam selesai wajib diisi.',
         ]);
 
         JadwalBM::create([
@@ -89,9 +70,6 @@ class JadwalBMController extends Controller
             'user_id' => $request->user_id,
             'sub_kelas_id' => $request->sub_kelas,
             'mapel_id' => $request->mapel_id,
-            'hari' => $request->hari,
-            'jam_mulai' => $request->jam_mulai,
-            'jam_selesai' => $request->jam_selesai,
             'slug' => Str::of($request->hari . '-' . time())->slug('-'),
         ]);
 
@@ -113,25 +91,16 @@ class JadwalBMController extends Controller
             'user_id' => 'required',
             'sub_kelas' => 'required',
             'mapel_id' => 'required',
-            'hari' => 'required',
-            'jam_mulai' => 'required',
-            'jam_selesai' => 'required',
         ], [
             'user_id.required' => 'Bidang Guru Pengajar wajib diisi.',
             'sub_kelas.required' => 'Bidang Kelas yang diampu wajib diisi.',
             'mapel_id.required' => 'Bidang Mapel yang diampu wajib diisi.',
-            'hari.required' => 'Bidang hari wajib diisi.',
-            'jam_mulai.required' => 'Bidang jam mulai wajib diisi.',
-            'jam_selesai.required' => 'Bidang jam selesai wajib diisi.',
         ]);
 
         JadwalBM::where('slug', $request->slug)->update([
             'user_id' => $request->user_id,
             'sub_kelas_id' => $request->sub_kelas,
             'mapel_id' => $request->mapel_id,
-            'hari' => $request->hari,
-            'jam_mulai' => $request->jam_mulai,
-            'jam_selesai' => $request->jam_selesai,
             'slug' => Str::of($request->hari . '-' . time())->slug('-'),
         ]);
 

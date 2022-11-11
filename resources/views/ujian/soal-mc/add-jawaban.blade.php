@@ -52,8 +52,8 @@
                             </div>
                             <input type="hidden" id="jawaban" name="jawaban"></input>
                         </div>
-                        <a href="{{ route('soal.mc.list', $soal->detailUjian[0]->ujian->slug) }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('soal.mc.list', $soal->detailUjian[0]->ujian->slug) }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </div>
             </form>

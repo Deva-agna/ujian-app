@@ -22,6 +22,7 @@ class CreateSiswasTable extends Migration
             $table->string('view_password');
             $table->string('role');
             $table->boolean('status')->default(true);
+            $table->string('lulus')->nullable();
             $table->string('slug');
             $table->rememberToken();
             $table->timestamps();

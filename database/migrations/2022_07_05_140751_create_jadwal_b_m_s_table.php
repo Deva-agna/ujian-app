@@ -19,9 +19,6 @@ class CreateJadwalBMSTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('sub_kelas_id')->constrained('sub_kelas');
             $table->foreignId('mapel_id')->constrained('mapels');
-            $table->string('hari');
-            $table->string('jam_mulai');
-            $table->string('jam_selesai');
             $table->string('slug');
             $table->timestamps();
         });

@@ -1,8 +1,8 @@
 @extends('layout.master')
 
-@section('halaman', 'Master Jadwal Belajar Mengajar')
+@section('halaman', 'Jadwal Mengajar')
 
-@section('title','Master Jadwal Belajar Mengajar')
+@section('title','Jadwal Mengajar')
 
 @section('jadwalBM','active')
 
@@ -37,22 +37,19 @@
                     <h4 class="card-title">Tahun Ajaran : {{ $tahun_ajaran->tahun_ajaran }}</h4>
                     <div class="dt-action-buttons text-right">
                         <div class="dt-buttons d-inline-flex">
-                            <a href="{{route('jadwalBM.create')}}" class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
+                            <a href="{{route('jadwalBM.create')}}" class="dt-button create-new btn-sm btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button">
                                 <i class="fa-solid fa-plus"></i> <span>Tambah Jadwal</span>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="table-responsive pl-2 pr-2">
-                    <table class="table" id="table_data">
+                    <table class="table table-striped" id="table_data" style="font-size: 14px;">
                         <thead>
                             <tr role="row">
                                 <th>Nama Guru</th>
                                 <th>Kelas</th>
-                                <th>Ruang</th>
                                 <th>Mapel</th>
-                                <th>Hari</th>
-                                <th>Jam</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -78,16 +75,13 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('jadwalBM') }}",
-            order: [
-                [1, 'asc']
-            ],
+            // order: [
+            //     [3, 'asc'],
+            //     [4, 'asc'],
+            // ],
             columns: [{
                     data: 'nama_guru',
                     name: 'nama_guru'
-                },
-                {
-                    data: 'kelas',
-                    name: 'kelas'
                 },
                 {
                     data: 'sub_kelas',
@@ -96,14 +90,6 @@
                 {
                     data: 'mapel',
                     name: 'mapel'
-                },
-                {
-                    data: 'hari',
-                    name: 'hari'
-                },
-                {
-                    data: 'jam',
-                    name: 'jam'
                 },
                 {
                     data: 'action',

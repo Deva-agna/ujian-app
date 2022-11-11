@@ -14,9 +14,6 @@ class JadwalBM extends Model
         'user_id',
         'sub_kelas_id',
         'mapel_id',
-        'hari',
-        'jam_mulai',
-        'jam_selesai',
         'slug',
     ];
 

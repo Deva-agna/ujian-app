@@ -46,7 +46,7 @@
     </div>
     <div class="card-body">
         @if($soal->image)
-        <img src="{{ asset('soal/'. $soal->image) }}" class=" img-fluid img-preview-soal d-block" width="200px">
+        <img src="{{ asset('soal/'. $soal->image) }}" class=" img-fluid img-preview-soal d-block mt-1" width="200px">
         @endif
         <div class="ql-editor" style="white-space: normal; padding: 12px 0 12px 0;">
             {!! $soal->soal !!}
@@ -114,14 +114,14 @@
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-center">
-    {{ $soal_s->links() }}
-</div>
 @empty
 <div class="text-center">
     <span>Soal tidak ditemukan!</span>
 </div>
 @endforelse
+<div class="d-flex justify-content-center">
+    {{ $soal_s->links() }}
+</div>
 
 @endsection
 

@@ -8,12 +8,45 @@
 	padding: 0 20px 0 20px;
 }
 
+#container .card-custome{
+	border-radius: 15px;
+	background: rgb(244, 249, 249);
+	box-shadow:  5px 5px 20px #9d9d9d,
+				-5px -5px 20px #ffffff;
+}
 
+#container .card-custome .card-body .card-soal{
+	overflow: hidden;
+	border-radius: 10px;
+	background: rgb(244, 249, 249);
+	box-shadow: inset 5px 5px 5px #9d9d9d,
+				inset -5px -5px 10px #ffffff;
+}
+
+.kop-soal {
+	padding: 20px;
+}
+
+.kop-soal .kop-soal-title {
+	font-size: 18px;
+}
+
+.kop-soal .kop-soal-img {
+	width: 75px;
+}
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
 	#container {
 		padding: 0 40px 0 40px;
+	}
+
+	.kop-soal .kop-soal-title {
+		font-size: 20px;
+	}
+
+	.kop-soal .kop-soal-img {
+		width: 80px;
 	}
 }
 
@@ -22,12 +55,28 @@
 	#container {
 		padding: 0 80px 0 80px;
 	}
+
+	.kop-soal .kop-soal-title {
+		font-size: 25px;
+	}
+
+	.kop-soal .kop-soal-img {
+		width: 90px;
+	}
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	#container {
 		padding: 0 110px 0 110px;
+	}
+
+	.kop-soal .kop-soal-title {
+		font-size: 28px;
+	}
+
+	.kop-soal .kop-soal-img {
+		width: 100px;
 	}
 }
 

@@ -23,7 +23,6 @@
     <i style="color: #FECF08;" class="fas fa-solid fa-triangle-exclamation"></i> <span><span style="font-weight: bold;">PERHATIAN.. </span>untuk tambah siswa menggunakan excel, template dapat diunduh <a href="#" style="font-weight: bold;">di sini!</a></span>
 </div> -->
 
-
 <section id="ajax-datatable">
     <div class="row">
         <div class="col-12">
@@ -32,7 +31,7 @@
                     <h4 class="card-title">Data Siswa</h4>
                     <div class="dt-action-buttons text-right">
                         <div class="dt-buttons d-inline-flex">
-                            <button class="dt-button create-new btn btn-primary" data-toggle="modal" data-target="#jumlah-data">
+                            <button class="dt-button btn-sm create-new btn btn-primary" data-toggle="modal" data-target="#jumlah-data">
                                 <i class="fa-solid fa-plus"></i> <span>Tambah Siswa</span>
                             </button>
                         </div>
@@ -73,7 +72,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Lanjut</button>
+                        <button type="submit" class="btn btn-sm btn-primary">Lanjut</button>
                     </div>
                 </form>
             </div>

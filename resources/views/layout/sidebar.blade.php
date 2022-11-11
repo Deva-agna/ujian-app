@@ -62,19 +62,16 @@
             </li>
             <li class="nav-item @yield('naik-kelas')">
                 <a class="d-flex align-items-center" href="{{ route('naik.kelas') }}">
-                    <i class="fa-solid fa-clipboard-list"></i><span class="menu-title text-truncate">Naik Kelas</span>
+                    <i class="fa-solid fa-arrow-up-right-dots"></i><span class="menu-title text-truncate">Naik Kelas</span>
+                </a>
+            </li>
+            <li class="nav-item @yield('alumni')">
+                <a class="d-flex align-items-center" href="{{ route('alumni') }}">
+                    <i class="fa-solid fa-user-graduate"></i><span class="menu-title text-truncate">Alumni</span>
                 </a>
             </li>
             @endif
             @if(Auth::guard('web')->user()->role == 'guru')
-            <li class="@yield('dashboard') nav-item">
-                <a class="d-flex align-items-center" href="{{ route('dashboard-guru') }}">
-                    <i class="fa-solid fa-desktop"></i><span class="menu-title text-truncate">Dashboard</span>
-                </a>
-            </li>
-            <li class=" navigation-header">
-                <span data-i18n="Apps &amp; Pages">Pages</span><i data-feather="more-horizontal"></i>
-            </li>
             <li class="@yield('ujian') nav-item">
                 <a class="d-flex align-items-center" href="{{ route('ujian') }}">
                     <i class="fa-solid fa-file-pen"></i><span class="menu-title text-truncate">Master Ujian</span>
@@ -88,17 +85,14 @@
             @endif
             @endif
             @if(Auth::guard('siswa')->user())
-            <li class="@yield('dashboard') nav-item">
-                <a class="d-flex align-items-center" href="{{ route('dashboard.siswa') }}">
-                    <i class="fa-solid fa-desktop"></i><span class="menu-title text-truncate">Dashboard</span>
-                </a>
-            </li>
-            <li class=" navigation-header">
-                <span data-i18n="Apps &amp; Pages">Pages</span><i data-feather="more-horizontal"></i>
-            </li>
             <li class="@yield('ujian') nav-item">
                 <a class="d-flex align-items-center" href="{{ route('daftar.ujian.siswa') }}">
                     <i class="fa-solid fa-file-pen"></i><span class="menu-title text-truncate">Ujian</span>
+                </a>
+            </li>
+            <li class="@yield('list-ujian-selesai') nav-item">
+                <a class="d-flex align-items-center" href="{{ route('list.ujian.selesai') }}">
+                    <i class="fa-solid fa-list-check"></i><span class="menu-title text-truncate">Ujian Selesai</span>
                 </a>
             </li>
             @endif

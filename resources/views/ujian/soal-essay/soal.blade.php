@@ -38,7 +38,7 @@
     </div>
 </div>
 
-@foreach($soal_s as $soal)
+@forelse($soal_s as $soal)
 
 <div class="card">
     <div class="card-header" style="background-color: #EAEAEA;">
@@ -92,10 +92,14 @@
         </div>
     </div>
 </div>
+@empty
+<div class="text-center">
+    <span>Soal tidak ditemukan!</span>
+</div>
+@endforelse
 <div class="d-flex justify-content-center">
     {{ $soal_s->links() }}
 </div>
-@endforeach
 
 @endsection
 

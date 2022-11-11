@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Siswa;
 use App\Models\SubKelas;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -125,5 +124,26 @@ class SiswaController extends Controller
             'view_password' => $password,
         ]);
         return redirect()->back()->with('sukses', 'Password berhasil di reset!');
+    }
+
+    public function alumni()
+    {
+        if (request()->ajax()) {
+            $siswa_s = Siswa::where('status', false)->get();
+            return datatables()->of($siswa_s)
+                ->addIndexColumn()
+                ->addColumn('nama', function ($row) {
+                    $nama = $row->nama;
+                    return $nama;
+                })
+                ->addColumn('nis', function ($row) {
+                    $nis = $row->nis;
+                    return $nis;
+                })
+                ->rawColumns(['nama', 'kelas'])
+                ->make(true);
+        }
+
+        return view('siswa.alumni');
     }
 }

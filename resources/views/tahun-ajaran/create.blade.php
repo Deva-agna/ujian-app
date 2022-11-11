@@ -42,8 +42,8 @@
                             </div>
                             @enderror
                         </div>
-                        <a href="{{ route('tahun.ajaran') }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('tahun.ajaran') }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

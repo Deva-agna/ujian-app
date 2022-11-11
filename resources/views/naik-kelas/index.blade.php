@@ -46,7 +46,7 @@
                 <div id="container-table" class="table-responsive d-none">
 
                 </div>
-                <button id="btn-submit" class="btn btn-primary waves-effect waves-float waves-light d-none" type="button">Simpan</button>
+                <button id="btn-submit" class="btn btn-sm btn-primary waves-effect waves-float waves-light d-none" type="button">Simpan</button>
             </form>
         </div>
     </div>

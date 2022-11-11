@@ -19,7 +19,6 @@ class CreateNilaisTable extends Migration
             $table->foreignId('siswa_id')->constrained('siswas');
             $table->string('start');
             $table->boolean('status')->default(false);
-            $table->string('keterlambatan')->default('-');
             $table->string('nilai')->default('-');
             $table->string('benar')->default('-');
             $table->string('salah')->default('-');

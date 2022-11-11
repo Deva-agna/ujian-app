@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary mr-1 mt-1 waves-effect waves-float waves-light">Save changes</button>
+                        <button type="submit" class="btn btn-sm btn-primary mr-1 mt-1 waves-effect waves-float waves-light">Simpan</button>
                     </div>
                 </div>
             </form>

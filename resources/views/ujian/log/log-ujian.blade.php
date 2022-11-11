@@ -21,18 +21,12 @@
                     <h4 class="card-title">Log Ujian</h4>
                 </div>
                 <div class="pl-2 pr-2 table-responsive">
-                    <table id="table_data" class="table">
+                    <table id="table_data" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Mapel</th>
+                                <th>Ujian Ditutup</th>
+                                <th>Title</th>
                                 <th>Kelas</th>
-                                <th>Ruang</th>
-                                <th>Mulai</th>
-                                <th>Selesai</th>
-                                <th>Durasi</th>
-                                <th>Token</th>
-                                <th>Tipe</th>
-                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -60,43 +54,19 @@
             serverSide: true,
             ajax: "{{ route('log.ujian') }}",
             order: [
-                [3, 'desc']
+                [0, 'desc']
             ],
             columns: [{
-                    data: 'mapel',
-                    name: 'mapel'
+                    data: 'ujian_ditutup',
+                    name: 'ujian_ditutup'
                 },
                 {
-                    data: 'kelas',
-                    name: 'kelas'
+                    data: 'title',
+                    name: 'title'
                 },
                 {
                     data: 'sub_kelas',
                     name: 'sub_kelas'
-                },
-                {
-                    data: 'waktu_mulai',
-                    name: 'waktu_mulai'
-                },
-                {
-                    data: 'waktu_selesai',
-                    name: 'waktu_selesai'
-                },
-                {
-                    data: 'waktu_ujian',
-                    name: 'waktu_ujian'
-                },
-                {
-                    data: 'token',
-                    name: 'token'
-                },
-                {
-                    data: 'type',
-                    name: 'type'
-                },
-                {
-                    data: 'status',
-                    name: 'status'
                 },
                 {
                     data: 'action',
