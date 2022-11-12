@@ -100,7 +100,7 @@ class SoalMultipleChoiceController extends Controller
         $image_old_jawaban = $request->image_old_jawaban;
 
 
-        $imageSoal = "";
+        $imageSoal = $image_old_soal;
         $imageJawaban = "";
 
         if ($imageInputSoal) {
