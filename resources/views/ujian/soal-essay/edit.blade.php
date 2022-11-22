@@ -49,15 +49,19 @@
                             <h1 class="card-title">Soal</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_soal">Gambar</label>
-                            <input type="file" name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
+                            <div class="flex">
+                                <label for="image_soal" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-soal btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
                             @if($soal->image)
-                            <img src="{{ asset('soal/'. $soal->image) }}" class=" img-fluid img-preview-soal d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->image) }}" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-soal d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                             @endif
-                            <input type="hidden" name="image_old_soal" value="{{$soal->image}}">
+                            <input type="hidden" class="image_old_soal" name="image_old_soal" value="{{$soal->image}}">
                         </div>
                         <div class="form-group">
                             <label>Pertanyaan</label>
@@ -68,8 +72,8 @@
                             </div>
                             <input type="hidden" id="soal" name="soal" value="{{$soal->soal}}"></input>
                         </div>
-                        <a href="{{ route('soal.essay.list', $soal->detailUjian[0]->ujian->slug) }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('soal.essay.list', $soal->detailUjian[0]->ujian->slug) }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -94,12 +98,8 @@
 <script>
     var tools = [
         [{
-                font: []
-            },
-            {
-                size: []
-            }
-        ],
+            size: []
+        }],
         ['bold', 'italic', 'underline', 'strike'],
         [{
                 color: []
@@ -121,8 +121,6 @@
             {
                 header: '2'
             },
-            'blockquote',
-            'code-block'
         ],
         [{
                 list: 'ordered'
@@ -137,14 +135,7 @@
                 indent: '+1'
             }
         ],
-        [
-            'direction',
-            {
-                align: []
-            }
-        ],
         ['formula'],
-        ['clean']
     ]
 
     var Editors = ['#input-soal'];
@@ -230,31 +221,53 @@
     function previewImageSoal() {
         const image = document.querySelector('#image_soal');
         const imgPreview = document.querySelector('.img-preview-soal');
-
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
-            image.value = "";
-            let cekImage = "{{$soal->image}}";
-            if (cekImage) {
-                imgPreview.src = "{{ asset('soal/'. $soal->image) }}";
+        const image_old_soal = document.getElementsByClassName('image_old_soal');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = image_old_soal[0].value;
+                if (cekImage) {
+                    imgPreview.src = `{{ asset('soal/${cekImage}') }}`;
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-soal').addClass('d-none');
+                }
             } else {
-                imgPreview.src = "";
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-soal').removeClass('d-none');
             }
         } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+            let cekImage = image_old_soal[0].value;
+            image.value = "";
+            if (cekImage) {
+                imgPreview.src = `{{ asset('soal/${cekImage}') }}`;
+            } else {
+                imgPreview.src = "";
+                $('.img-clear-soal').addClass('d-none');
             }
         }
     }
+
+    $('.img-clear-soal').on('click', function() {
+        const image = document.querySelector('#image_soal');
+        const imgPreview = document.querySelector('.img-preview-soal');
+        const image_old_soal = document.getElementsByClassName('image_old_soal');
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-soal').addClass('d-none');
+        image_old_soal[0].value = "";
+    });
 
     $(document).on('click', '.btn-hapus', function(e) {
         e.preventDefault();

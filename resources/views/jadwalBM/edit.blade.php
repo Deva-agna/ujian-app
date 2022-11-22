@@ -1,8 +1,8 @@
 @extends('layout.master')
 
-@section('halaman', 'Update Jadwal Belajar Mengajar')
+@section('halaman', 'Edit Jadwal Mengajar')
 
-@section('title','Update Jadwal Belajar Mengajar')
+@section('title','Edit Jadwal Mengajar')
 
 @section('jadwalBM','active')
 
@@ -17,6 +17,19 @@
 @endsection
 
 @section('konten')
+
+@error('error')
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <h4 class="alert-heading">Informasi!</h4>
+    <div class="alert-body">
+        {{$message}}
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+@enderror
+
 <section id="basic-input">
     <div class="row">
         <div class="col-md-12">
@@ -42,10 +55,10 @@
                         </div>
                         <div class="form-group">
                             <label for="sub_kelas">Kelas yang diampu <span class="text-danger">*</span></label>
-                            <select name="sub_kelas" class="form-control form-control-sm @error('sub_kelas') is-invalid @enderror" id="sub_kelas">
+                            <select name="sub_kelas" class="text-uppercase form-control form-control-sm @error('sub_kelas') is-invalid @enderror" id="sub_kelas">
                                 <option value="">Pilih</option>
                                 @foreach($sub_kelas_s as $sub_kelas)
-                                <option {{ old('sub_kelas', $jadwalBM->sub_kelas_id) == $sub_kelas->id ? 'selected' : '' }} value="{{ $sub_kelas->id }}">{{$sub_kelas->sub_kelas}} | {{$sub_kelas->kelas->nama_kelas}}</option>
+                                <option class="text-uppercase" {{ old('sub_kelas', $jadwalBM->sub_kelas_id) == $sub_kelas->id ? 'selected' : '' }} value="{{ $sub_kelas->id }}">{{$sub_kelas->sub_kelas}} | {{$sub_kelas->kelas->nama_kelas}}</option>
                                 @endforeach
                             </select>
                             @error('sub_kelas')

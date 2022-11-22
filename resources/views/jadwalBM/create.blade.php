@@ -17,6 +17,19 @@
 @endsection
 
 @section('konten')
+
+@error('error')
+<div class="alert alert-warning alert-dismissible" role="alert">
+    <h4 class="alert-heading">Informasi!</h4>
+    <div class="alert-body">
+        {{$message}}
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+@enderror
+
 <section id="basic-input">
     <div class="row">
         <div class="col-md-12">

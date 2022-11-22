@@ -159,7 +159,7 @@
         const id = $(this).data('id');
         Swal.fire({
             title: 'Perhatian!',
-            text: "Pastikan semua data sudah benar, paling tidak minimal ada 5 soal!",
+            text: "Pastikan semua data sudah benar, paling tidak minimal ada 5 soal untuk ujian PG dan PG Komples, 1 Soal untuk ujian Esai/Uraian!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -183,7 +183,8 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Batalkan!'
+            confirmButtonText: 'Ya, Batalkan!',
+            cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
                 $(`#form-cancelled${id}`).submit();

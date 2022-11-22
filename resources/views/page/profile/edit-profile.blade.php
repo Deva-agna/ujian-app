@@ -72,7 +72,7 @@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="tanggal_lahir">Tanggal Lahir</label>
-                                <input type="text" class="form-control-sm form-control @error('tanggal_lahir') is-invalid @enderror flatpickr flatpickr-input active" placeholder="Tanggal lahir" id="tanggal_lahir" name="tanggal_lahir" readonly="readonly" value="{{old('tanggal_lahir', Auth::guard('web')->user()->tanggal_lahir)}}">
+                                <input type="text" class="form-control-sm form-control @error('tanggal_lahir') is-invalid @enderror flatpickr-basic flatpickr-input" placeholder="Tanggal lahir" id="tanggal_lahir" name="tanggal_lahir" readonly="readonly" value="{{old('tanggal_lahir', Auth::guard('web')->user()->tanggal_lahir)}}">
                                 @error('tanggal_lahir')
                                 <div class="invalid-feedback">
                                     {{$message}}

@@ -94,7 +94,7 @@ class TahunAjaranController extends Controller
     {
 
         if ($tahun_ajaran->jadwalBM->count() > 0) {
-            return redirect()->back()->with('error', 'Tahun ajaran tidak dapat dihapus, dikarenakan memiliki relasi ke data jadwal belajar mengajar! ');
+            return redirect()->back()->with('error', 'Tahun ajaran tidak dapat dihapus, dikarenakan memiliki relasi ke data jadwal mengajar! ');
         }
 
         TahunAjaran::destroy($tahun_ajaran->id);

@@ -12,7 +12,6 @@
 
 @section('page-css')
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/page-profile.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/pickers/form-pickadate.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/forms/pickers/form-flat-pickr.css') }}">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/sweetalert2.min.css') }}">
@@ -92,7 +91,18 @@
 @endsection
 
 @section('vendor-js')
+<script src=" {{ asset('app-assets/vendors/js/pickers/pickadate/picker.js') }} "></script>
+<script src=" {{ asset('app-assets/vendors/js/pickers/pickadate/picker.date.js') }} "></script>
+<script src=" {{ asset('app-assets/vendors/js/pickers/pickadate/picker.time.js') }} "></script>
+<script src=" {{ asset('app-assets/vendors/js/pickers/pickadate/legacy.js') }} "></script>
+
 <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
+@endsection
+
+@section('page-js')
+
+<script src=" {{ asset('app-assets/js/scripts/forms/pickers/form-pickers.js') }} "></script>
+
 @endsection
 
 @section('script')

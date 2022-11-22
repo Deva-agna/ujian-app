@@ -87,6 +87,11 @@ class UjianController extends Controller
             'type_ujian.required' => 'Bidang type ujian wajib diisi.',
         ]);
 
+        $token = "";
+        for ($i = 0; $i < 5; $i++) {
+            $token .= chr(rand(65, 90));
+        }
+
         Ujian::create([
             'jadwal_b_m_id' => $request->jadwal_belajar,
             'title' => $request->title,
@@ -94,7 +99,7 @@ class UjianController extends Controller
             'waktu_selesai' => $request->waktu_selesai,
             'waktu_ujian' => $request->waktu_ujian,
             'type_ujian' => $request->type_ujian,
-            'token' => Str::random(5),
+            'token' => $token,
             'slug' => Str::of(Auth::guard('web')->user()->nama . '-ujian-' . time())->slug('-'),
         ]);
 
@@ -170,6 +175,18 @@ class UjianController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->back()->with('sukses', 'Ujian berhasil di activekan!');
+        return redirect()->back()->with('sukses', 'Data ujian berhasil diubah!');
+    }
+
+    public function lihatSoal(Ujian $ujian)
+    {
+        $list_s = $ujian->detailUjian;
+        if ($ujian->type_ujian == 'pg') {
+            return view('ujian.lihat-soal-pg', compact('list_s'));
+        } else if ($ujian->type_ujian == 'mc') {
+            return view('ujian.lihat-soal-mc', compact('list_s'));
+        } else {
+            return view('ujian.lihat-soal-essay', compact('list_s'));
+        }
     }
 }

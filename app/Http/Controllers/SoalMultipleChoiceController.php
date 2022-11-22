@@ -100,16 +100,23 @@ class SoalMultipleChoiceController extends Controller
         $image_old_jawaban = $request->image_old_jawaban;
 
 
-        $imageSoal = $image_old_soal;
-        $imageJawaban = "";
+        $imageSoal = $soal->image;
 
         if ($imageInputSoal) {
-            $file = public_path('soal/') . $image_old_soal;
+            $file = public_path('soal/') . $imageSoal;
             if ($file) {
                 @unlink($file);
             }
             $imageSoal = Str::random(10) . '.' . time() . '.' . $imageInputSoal->extension();
             $imageInputSoal->move(public_path('soal'), $imageSoal);
+        } else {
+            if ($image_old_soal == "") {
+                $file = public_path('soal/') . $soal->image;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imageSoal = "";
+                }
+            }
         }
 
         Soal::where('slug', $request->slug)->update([
@@ -119,23 +126,29 @@ class SoalMultipleChoiceController extends Controller
         ]);
 
         for ($i = 0; $i < count($jawaban); $i++) {
+            $detailSoal = DetailSoal::where('slug', $request->jawaban_slug[$i])->first();
+            $imageJawaban = $detailSoal->image;
             if ($cekImage[$i]) {
-                $file = public_path('soal/') . $image_old_jawaban[$i];
+                $file = public_path('soal/') . $detailSoal->image;
                 if ($file) {
                     @unlink($file);
                 }
                 $imageJawaban = Str::random(10) . '.' . time() . '.' . $imageInputJawaban[$i]->extension();
                 $imageInputJawaban[$i]->move(public_path('soal'), $imageJawaban);
             } else {
-                $imageJawaban = $image_old_jawaban[$i];
+                if ($image_old_jawaban[$i] == "") {
+                    $file = public_path('soal/') . $detailSoal->image;
+                    if (file_exists($file)) {
+                        @unlink($file);
+                        $imageJawaban = "";
+                    }
+                }
             }
             DetailSoal::where('slug', $request->jawaban_slug[$i])->update([
                 'jawaban' => $jawaban[$i],
                 'image' => $imageJawaban,
                 'kunci_jawaban' => $kunci_jawaban[$i],
             ]);
-
-            $imageJawaban = "";
         }
 
         return redirect()->route('soal.mc.list', $soal->detailUjian[0]->ujian->slug)->with('sukses', 'Data soal berhasil diupdate!');

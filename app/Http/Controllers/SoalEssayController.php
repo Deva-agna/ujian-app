@@ -65,26 +65,29 @@ class SoalEssayController extends Controller
     {
         $soal = Soal::where('slug', $request->slug)->first();
 
-        $imgSoal = "";
+        $imgSoal = $soal->image;
 
         if ($request->image_soal) {
-
-            $file = public_path('soal/') . $request->image_old_soal;
+            $file = public_path('soal/') . $imgSoal;
             if (file_exists($file)) {
                 @unlink($file);
             }
-
             $imgSoal = Str::random(10) . '.' . time() . '.' . $request->image_soal->extension();
             $request->image_soal->move(public_path('soal'), $imgSoal);
-
-            Soal::where('slug', $request->slug)->update([
-                'image' => $imgSoal,
-            ]);
+        } else {
+            if ($request->image_old_soal == "") {
+                $file = public_path('soal/') . $imgSoal;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imgSoal = "";
+                }
+            }
         }
 
         Soal::where('slug', $request->slug)->update([
             'title' => $request->deskripsi,
             'soal' => $request->soal,
+            'image' => $imgSoal,
         ]);
 
         return redirect()->route('soal.essay.list', $soal->detailUjian[0]->ujian->slug)->with('sukses', 'Data soal berhasil diupdate');

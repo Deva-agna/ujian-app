@@ -57,6 +57,10 @@
             <i class="fa-solid fa-eye"></i>
             <span>Lihat Peserta</span>
         </a>
+        <a href="{{ route('lihat.soal', $model->slug) }}" class="dropdown-item">
+            <i class="fa-solid fa-list"></i>
+            <span>Lihat Soal</span>
+        </a>
         @endif
 
         @if($model->status == 'pending' && $model->detailUjian->count() >= 1 && $model->type_ujian == 'essay')

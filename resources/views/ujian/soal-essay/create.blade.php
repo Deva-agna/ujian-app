@@ -52,9 +52,14 @@
                             <h1 class="card-title">Soal</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_soal">Gambar</label>
-                            <input type="file" name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
-                            <img src="" class=" img-fluid img-preview-soal d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_soal" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-soal btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
+                            <img src="" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Pertanyaan</label>
@@ -65,8 +70,8 @@
                             </div>
                             <input type="hidden" id="soal" name="soal"></input>
                         </div>
-                        <a href="{{ route('soal.essay.list', $ujian->slug) }}" class="btn btn-secondary waves-effect waves-float waves-light">Kembali</a>
-                        <button class="btn btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
+                        <a href="{{ route('soal.essay.list', $ujian->slug) }}" class="btn btn-sm btn-secondary waves-effect waves-float waves-light">Kembali</a>
+                        <button class="btn btn-sm btn-primary waves-effect waves-float waves-light" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -114,8 +119,6 @@
             {
                 header: '2'
             },
-            'blockquote',
-            'code-block'
         ],
         [{
                 list: 'ordered'
@@ -128,12 +131,6 @@
             },
             {
                 indent: '+1'
-            }
-        ],
-        [
-            'direction',
-            {
-                align: []
             }
         ],
         ['formula'],
@@ -223,25 +220,41 @@
     function previewImageSoal() {
         const image = document.querySelector('#image_soal');
         const imgPreview = document.querySelector('.img-preview-soal');
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-soal').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-soal').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-soal').addClass('d-none');
         }
     }
+
+    $('.img-clear-soal').on('click', function() {
+        const image = document.querySelector('#image_soal');
+        const imgPreview = document.querySelector('.img-preview-soal');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-soal').addClass('d-none');
+    });
 </script>
 
 @endsection

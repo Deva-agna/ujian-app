@@ -20,10 +20,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/mathquill/mathquill4quill.css') }}">
 
 <style>
-    .waves-effect {
-        position: static;
-    }
-
     .ql-snow .ql-tooltip {
         position: relative;
     }
@@ -34,7 +30,7 @@
 
 <section id="basic-input">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mb-2">
             <form action="{{ route('soal.mc.update') }}" method="post" enctype="multipart/form-data" onsubmit="return validasiForm()">
                 @method('put')
                 @csrf
@@ -53,15 +49,19 @@
                             <h1 class="card-title">Soal</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_soal">Gambar</label>
-                            <input type="file" name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" value="" accept="image/*" onchange="previewImageSoal()">
+                            <div class="flex">
+                                <label for="image_soal" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-soal btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" value="" accept="image/*" onchange="previewImageSoal()">
                             @if($soal->image)
-                            <img src="{{ asset('soal/'. $soal->image) }}" class=" img-fluid img-preview-soal d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->image) }}" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-soal d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                             @endif
-                            <input type="hidden" name="image_old_soal" value="{{$soal->image}}">
+                            <input type="hidden" class="image_old_soal" name="image_old_soal" value="{{$soal->image}}">
                         </div>
                         <div class="form-group">
                             <label>Pertanyaan</label>
@@ -77,28 +77,32 @@
                 <div class="card">
                     <div class="card-body">
                         @foreach($soal->detailSoal as $data)
-                        <h1 class="card-title mb-0">Jawaban</h1>
+                        <h1 class="card-title">Jawaban</h1>
                         <input type="hidden" name="jawaban_slug[]" value="{{$data->slug}}">
                         <div class="form-group">
-                            <label for="image_jawaban">Gambar</label>
-                            <input type="file" name="image_jawaban[]" class="form-control-file mb-1" name="image_jawaban[]" id="image_jawaban{{$loop->iteration-1}}" accept="image/*">
+                            <div class="flex">
+                                <label for="image_jawaban{{$loop->iteration-1}}" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban{{$loop->iteration-1}} btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$data->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban[]" class="form-control-file mb-1" name="image_jawaban[]" id="image_jawaban{{$loop->iteration-1}}" accept="image/*">
                             <input id="cek_image" type="hidden" name="cek_image[]" value="">
-                            @if($soal->detailSoal[$loop->iteration-1]->image)
-                            <img src="{{ asset('soal/'. $soal->detailSoal[$loop->iteration-1]->image) }}" class=" img-fluid img-preview-jawaban{{$loop->iteration-1}} d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->detailSoal[$loop->iteration-1]->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            @if($data->image)
+                            <img src="{{ asset('soal/'. $data->image) }}" class="mt-1 img-fluid img-preview-jawaban{{$loop->iteration-1}} d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-jawaban{{$loop->iteration-1}} d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban{{$loop->iteration-1}} d-block" width="180px">
                             @endif
-                            <input type="hidden" class=".image_old_jawaban{{$loop->iteration-1}}" name="image_old_jawaban[]" value="{{$soal->detailSoal[$loop->iteration-1]->image}}">
+                            <input type="hidden" class="image_old_jawaban{{$loop->iteration-1}}" name="image_old_jawaban[]" value="{{$data->image}}">
                         </div>
                         <div class="form-group">
                             <label>Jawaban</label>
                             <div id="ql-editor-show{{$loop->iteration-1}}">
                                 <div class="editor">
-                                    {!!$soal->detailSoal[$loop->iteration-1]->jawaban!!}
+                                    {!!$data->jawaban!!}
                                 </div>
                             </div>
-                            <input type="hidden" id="jawaban{{$loop->iteration-1}}" name="jawaban[]" value="{{$soal->detailSoal[$loop->iteration-1]->jawaban}}"></input>
+                            <input type="hidden" id="jawaban{{$loop->iteration-1}}" name="jawaban[]" value="{{$data->jawaban}}"></input>
                         </div>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" @if($data->kunci_jawaban) checked @endif name="checkbox[]" id="kunci_jawaban{{$loop->iteration-1}}">
@@ -157,8 +161,6 @@
             {
                 header: '2'
             },
-            'blockquote',
-            'code-block'
         ],
         [{
                 list: 'ordered'
@@ -171,12 +173,6 @@
             },
             {
                 indent: '+1'
-            }
-        ],
-        [
-            'direction',
-            {
-                align: []
             }
         ],
         ['formula'],
@@ -266,31 +262,53 @@
         $("#image_jawaban" + index).on("input", function() {
             const image = document.querySelector('#image_jawaban' + index);
             const imgPreview = document.querySelector('.img-preview-jawaban' + index);
-            const image_old_jawaban = document.getElementsByClassName(`.image_old_jawaban${index}`);
-            console.log(image_old_jawaban);
-            if (image.files[0].size > 2 * 1048576) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Perhatian',
-                    text: 'Gambar yang diunggah maksimal 2 MB!',
-                })
+            const image_old_jawaban = document.getElementsByClassName(`image_old_jawaban${index}`);
+
+            if (image.files.length > 0) {
+                if (image.files[0].size > 2 * 1048576) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Perhatian',
+                        text: 'Gambar yang diunggah maksimal 2 MB!',
+                    })
+                    image.value = "";
+                    let cekImage = image_old_jawaban[0].value;
+                    if (cekImage) {
+                        imgPreview.src = `{{ asset('soal/${cekImage}') }}`;
+                    } else {
+                        imgPreview.src = "";
+                        $(`.img-clear-jawaban${index}`).addClass('d-none');
+                    }
+                } else {
+                    imgPreview.style.display = 'block';
+                    const oFReader = new FileReader();
+                    oFReader.readAsDataURL(image.files[0]);
+
+                    oFReader.onload = function(oFREvent) {
+                        imgPreview.src = oFREvent.target.result;
+                    }
+                    $(`.img-clear-jawaban${index}`).removeClass('d-none');
+                }
+            } else {
+                let cekImage = image_old_jawaban[0].value;
                 image.value = "";
-                const cekImage = image_old_jawaban[0].value;
                 if (cekImage) {
                     imgPreview.src = `{{ asset('soal/${cekImage}') }}`;
                 } else {
                     imgPreview.src = "";
-                }
-            } else {
-                imgPreview.style.display = 'block';
-
-                const oFReader = new FileReader();
-                oFReader.readAsDataURL(image.files[0]);
-
-                oFReader.onload = function(oFREvent) {
-                    imgPreview.src = oFREvent.target.result;
+                    $(`.img-clear-jawaban${index}`).addClass('d-none');
                 }
             }
+        });
+
+        $(`.img-clear-jawaban${index}`).on('click', function() {
+            const image = document.querySelector('#image_jawaban' + index);
+            const imgPreview = document.querySelector('.img-preview-jawaban' + index);
+            const image_old_jawaban = document.getElementsByClassName(`image_old_jawaban${index}`);
+            image.value = "";
+            imgPreview.src = "";
+            $(`.img-clear-jawaban${index}`).addClass('d-none');
+            image_old_jawaban[0].value = "";
         });
     }
 
@@ -382,31 +400,54 @@
     function previewImageSoal() {
         const image = document.querySelector('#image_soal');
         const imgPreview = document.querySelector('.img-preview-soal');
+        const image_old_soal = document.getElementsByClassName('image_old_soal');
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
-            image.value = "";
-            let cekImage = "{{$soal->image}}";
-            if (cekImage) {
-                imgPreview.src = "{{ asset('soal/'. $soal->image) }}";
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = image_old_soal[0].value;
+                if (cekImage) {
+                    imgPreview.src = `{{ asset('soal/${cekImage}') }}`;
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-soal').addClass('d-none');
+                }
             } else {
-                imgPreview.src = "";
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-soal').removeClass('d-none');
             }
         } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+            let cekImage = image_old_soal[0].value;
+            image.value = "";
+            if (cekImage) {
+                imgPreview.src = `{{ asset('soal/${cekImage}') }}`;
+            } else {
+                imgPreview.src = "";
+                $('.img-clear-soal').addClass('d-none');
             }
         }
     }
+
+    $('.img-clear-soal').on('click', function() {
+        const image = document.querySelector('#image_soal');
+        const imgPreview = document.querySelector('.img-preview-soal');
+        const image_old_soal = document.getElementsByClassName('image_old_soal');
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-soal').addClass('d-none');
+        image_old_soal[0].value = "";
+    });
 
     $(document).on('click', '.btn-hapus', function(e) {
         e.preventDefault();

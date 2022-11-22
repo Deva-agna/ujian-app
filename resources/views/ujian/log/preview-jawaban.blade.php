@@ -88,7 +88,7 @@
                         <span class="font-weight-bold">Soal No. {{$loop->iteration}}</span>
                         <div class="ql-editor" style="white-space: normal;">
                             @if($data->soal->image)
-                            <img src="{{ asset('soal/'. $data->soal->image) }}" class=" img-fluid d-block" width="200px">
+                            <img src="{{ asset('soal/'. $data->soal->image) }}" class="mb-1 img-fluid d-block" width="200px">
                             @endif
                             {!! $data->soal->soal !!}
                         </div>
@@ -96,11 +96,15 @@
                 </tr>
                 <?php $huruf = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']  ?>
                 @foreach($data->detailJawaban as $jawaban)
+                @if($jawaban->status)
+                <tr class="{{ !$jawaban->detailSoal->kunci_jawaban ? 'bg-danger text-white' : '' }}">
+                    @else
                 <tr>
+                    @endif
                     <td style="padding:0 0 0 15px;">
                         <div class="d-flex align-items-center">
                             @if($jawaban->status)
-                            <i class="fa-solid {{ $nilai->ujian->type_ujian == 'pg' ? 'fa-circle' : 'fa-square-check' }}" style="margin-right: 5px;"></i>
+                            <i class="fa-solid {{ $nilai->ujian->type_ujian == 'pg' ? 'fa-circle' : 'fa-square-check' }}" style="margin-right: 5px; color: #6e6b7b;"></i>
                             <span><?= $huruf[$loop->iteration - 1] ?></span>
                             @else
                             <i class="fa-regular {{ $nilai->ujian->type_ujian == 'pg' ? 'fa-circle' : 'fa-square' }}" style="margin-right: 5px;"></i>
@@ -110,7 +114,7 @@
                     </td>
                     <td style="padding-left:15px; white-space: normal; width: 100%;" class="ql-editor">
                         @if($jawaban->detailSoal->image)
-                        <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-fluid d-block" width="200px">
+                        <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="mb-1 img-fluid d-block" width="200px">
                         @endif
                         {!! $jawaban->detailSoal->jawaban !!}
                     </td>

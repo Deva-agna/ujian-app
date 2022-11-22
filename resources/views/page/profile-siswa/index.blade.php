@@ -8,6 +8,10 @@
 
 @section('profile-siswa','active')
 
+@section('page-css')
+<link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/sweetalert2.min.css') }}">
+@endsection
+
 @section('konten')
 
 <section id="kartu-pelajar">
@@ -103,5 +107,30 @@
     </div>
 </section>
 
+
+@endsection
+
+@section('script')
+<script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
+@if(session()->has('sukses'))
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: 'success',
+        title: '{{session("sukses")}}'
+    })
+</script>
+@endif
 
 @endsection

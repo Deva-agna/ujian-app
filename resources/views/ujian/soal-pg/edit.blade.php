@@ -20,10 +20,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/mathquill/mathquill4quill.css') }}">
 
 <style>
-    .waves-effect {
-        position: static;
-    }
-
     .ql-snow .ql-tooltip {
         position: relative;
     }
@@ -53,13 +49,17 @@
                             <h1 class="card-title">Soal</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_soal">Gambar</label>
-                            <input type="file" name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
+                            <div class="flex">
+                                <label for="image_soal" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-soal btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
                             @if($soal->image)
-                            <img src="{{ asset('soal/'. $soal->image) }}" class=" img-fluid img-preview-soal d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->image) }}" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-soal d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                             @endif
                             <input type="hidden" name="image_old_soal" value="{{$soal->image}}">
                         </div>
@@ -77,13 +77,17 @@
                             <h1 class="card-title">Jawaban a</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_a">Gambar</label>
-                            <input type="file" name="image_jawaban_a" class="form-control-file mb-1" name="image_jawaban_a" id="image_jawaban_a" accept="image/*" onchange="previewImageJawabanA()">
+                            <div class="flex">
+                                <label for="image_jawaban_a" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-a btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->detailSoal[0]->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_a" class="form-control-file mb-1" name="image_jawaban_a" id="image_jawaban_a" accept="image/*" onchange="previewImageJawabanA()">
                             @if($soal->detailSoal[0]->image)
-                            <img src="{{ asset('soal/'. $soal->detailSoal[0]->image) }}" class=" img-fluid img-preview-jawaban-a d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->detailSoal[0]->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->detailSoal[0]->image) }}" class="mt-1 img-fluid img-preview-jawaban-a d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-jawaban-a d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-a d-block" width="180px">
                             @endif
                             <input type="hidden" name="jawaban_a_id" value="{{$soal->detailSoal[0]->id}}">
                             <input type="hidden" id="image_old_jawaban_a" name="image_old_jawaban_a" value="{{$soal->detailSoal[0]->image}}">
@@ -102,13 +106,17 @@
                             <h1 class="card-title">Jawaban b</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_b">Gambar</label>
-                            <input type="file" name="image_jawaban_b" class="form-control-file mb-1" name="image_jawaban_b" id="image_jawaban_b" accept="image/*" onchange="previewImageJawabanB()">
+                            <div class="flex">
+                                <label for="image_jawaban_b" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-b btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->detailSoal[1]->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_b" class="form-control-file mb-1" name="image_jawaban_b" id="image_jawaban_b" accept="image/*" onchange="previewImageJawabanB()">
                             @if($soal->detailSoal[1]->image)
-                            <img src="{{ asset('soal/'. $soal->detailSoal[1]->image) }}" class=" img-fluid img-preview-jawaban-b d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->detailSoal[1]->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->detailSoal[1]->image) }}" class="mt-1 img-fluid img-preview-jawaban-b d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-jawaban-b d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-b d-block" width="180px">
                             @endif
                             <input type="hidden" name="jawaban_b_id" value="{{$soal->detailSoal[1]->id}}">
                             <input type="hidden" id="image_old_jawaban_b" name="image_old_jawaban_b" value="{{$soal->detailSoal[1]->image}}">
@@ -127,13 +135,17 @@
                             <h1 class="card-title">Jawaban c</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_c">Gambar</label>
-                            <input type="file" name="image_jawaban_c" class="form-control-file mb-1" name="image_jawaban_c" id="image_jawaban_c" accept="image/*" onchange="previewImageJawabanC()">
+                            <div class="flex">
+                                <label for="image_jawaban_c" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-c btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->detailSoal[2]->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_c" class="form-control-file mb-1" name="image_jawaban_c" id="image_jawaban_c" accept="image/*" onchange="previewImageJawabanC()">
                             @if($soal->detailSoal[2]->image)
-                            <img src="{{ asset('soal/'. $soal->detailSoal[2]->image) }}" class=" img-fluid img-preview-jawaban-c d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->detailSoal[2]->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->detailSoal[2]->image) }}" class="mt-1 img-fluid img-preview-jawaban-c d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-jawaban-c d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-c d-block" width="180px">
                             @endif
                             <input type="hidden" name="jawaban_c_id" value="{{$soal->detailSoal[2]->id}}">
                             <input type="hidden" id="image_old_jawaban_c" name="image_old_jawaban_c" value="{{$soal->detailSoal[2]->image}}">
@@ -152,13 +164,17 @@
                             <h1 class="card-title">Jawaban d</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_d">Gambar</label>
-                            <input type="file" name="image_jawaban_d" class="form-control-file mb-1" name="image_jawaban_d" id="image_jawaban_d" accept="image/*" onchange="previewImageJawabanD()">
+                            <div class="flex">
+                                <label for="image_jawaban_d" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-d btn btn-sm btn-icon btn-outline-secondary waves-effect {{ !$soal->detailSoal[3]->image ? 'd-none' : ''}}">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_d" class="form-control-file mb-1" name="image_jawaban_d" id="image_jawaban_d" accept="image/*" onchange="previewImageJawabanD()">
                             @if($soal->detailSoal[3]->image)
-                            <img src="{{ asset('soal/'. $soal->detailSoal[3]->image) }}" class=" img-fluid img-preview-jawaban-d d-block" width="180px">
-                            <a href="{{ route('soal.destroy.image', $soal->detailSoal[3]->slug) }}" class="badge badge-primary btn-hapus" style="margin-top: 5px;" title="Hapus gambar"><i class="fa-solid fa-image" style="margin-right: 5px;"></i> Hapus</a>
+                            <img src="{{ asset('soal/'. $soal->detailSoal[3]->image) }}" class="mt-1 img-fluid img-preview-jawaban-d d-block" width="180px">
                             @else
-                            <img src="" class=" img-fluid img-preview-jawaban-d d-block" width="180px">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-d d-block" width="180px">
                             @endif
                             <input type="hidden" name="jawaban_d_id" value="{{$soal->detailSoal[3]->id}}">
                             <input type="hidden" id="image_old_jawaban_d" name="image_old_jawaban_d" value="{{$soal->detailSoal[3]->image}}">
@@ -222,12 +238,8 @@
     let enableMathQuillFormulaAuthoring = mathquill4quill();
     var tools = [
         [{
-                font: []
-            },
-            {
-                size: []
-            }
-        ],
+            size: []
+        }],
         ['bold', 'italic', 'underline', 'strike'],
         [{
                 color: []
@@ -249,8 +261,6 @@
             {
                 header: '2'
             },
-            'blockquote',
-            'code-block'
         ],
         [{
                 list: 'ordered'
@@ -265,14 +275,7 @@
                 indent: '+1'
             }
         ],
-        [
-            'direction',
-            {
-                align: []
-            }
-        ],
         ['formula'],
-        ['clean']
     ]
 
     var Editors = ['#input-soal', '#input-jawaban-a', '#input-jawaban-b', '#input-jawaban-c', '#input-jawaban-d'];
@@ -407,187 +410,251 @@
     function previewImageSoal() {
         const image = document.querySelector('#image_soal');
         const imgPreview = document.querySelector('.img-preview-soal');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = $("[name='image_old_soal']");
+                if (cekImage[0].value) {
+                    imgPreview.src = "{{ asset('soal/'. $soal->image) }}";
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-soal').addClass('d-none');
+                }
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-soal').removeClass('d-none');
+            }
+        } else {
+            let cekImage = $("[name='image_old_soal']");
             image.value = "";
-            let cekImage = "{{$soal->image}}";
-            if (cekImage) {
+            if (cekImage[0].value) {
                 imgPreview.src = "{{ asset('soal/'. $soal->image) }}";
             } else {
                 imgPreview.src = "";
-            }
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+                $('.img-clear-soal').addClass('d-none');
             }
         }
     }
+
+    $('.img-clear-soal').on('click', function() {
+        const image = document.querySelector('#image_soal');
+        const imgPreview = document.querySelector('.img-preview-soal');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-soal').addClass('d-none');
+        $("[name='image_old_soal']").val("");
+    });
 
     function previewImageJawabanA() {
         const image = document.querySelector('#image_jawaban_a');
         const imgPreview = document.querySelector('.img-preview-jawaban-a');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = $("[name='image_old_jawaban_a']");
+                if (cekImage[0].value) {
+                    imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[0]->image) }}";
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-jawaban-a').addClass('d-none');
+                }
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-a').removeClass('d-none');
+            }
+        } else {
+            let cekImage = $("[name='image_old_jawaban_a']");
             image.value = "";
-            let cekImage = "{{$soal->detailSoal[0]->image}}";
-            if (cekImage) {
+            if (cekImage[0].value) {
                 imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[0]->image) }}";
             } else {
                 imgPreview.src = "";
-            }
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+                $('.img-clear-jawaban-a').addClass('d-none');
             }
         }
     }
+
+    $('.img-clear-jawaban-a').on('click', function() {
+        const image = document.querySelector('#image_jawaban_a');
+        const imgPreview = document.querySelector('.img-preview-jawaban-a');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-a').addClass('d-none');
+        $("[name='image_old_jawaban_a']").val("");
+    });
 
     function previewImageJawabanB() {
         const image = document.querySelector('#image_jawaban_b');
         const imgPreview = document.querySelector('.img-preview-jawaban-b');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = $("[name='image_old_jawaban_b']");
+                if (cekImage[0].value) {
+                    imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[1]->image) }}";
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-jawaban-b').addClass('d-none');
+                }
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-b').removeClass('d-none');
+            }
+        } else {
+            let cekImage = $("[name='image_old_jawaban_b']");
             image.value = "";
-            let cekImage = "{{$soal->detailSoal[1]->image}}";
-            if (cekImage) {
+            if (cekImage[0].value) {
                 imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[1]->image) }}";
             } else {
                 imgPreview.src = "";
-            }
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+                $('.img-clear-jawaban-b').addClass('d-none');
             }
         }
     }
+
+    $('.img-clear-jawaban-b').on('click', function() {
+        const image = document.querySelector('#image_jawaban_b');
+        const imgPreview = document.querySelector('.img-preview-jawaban-b');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-b').addClass('d-none');
+        $("[name='image_old_jawaban_b']").val("");
+    });
 
     function previewImageJawabanC() {
         const image = document.querySelector('#image_jawaban_c');
         const imgPreview = document.querySelector('.img-preview-jawaban-c');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = $("[name='image_old_jawaban_c']");
+                if (cekImage[0].value) {
+                    imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[2]->image) }}";
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-jawaban-c').addClass('d-none');
+                }
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-c').removeClass('d-none');
+            }
+        } else {
+            let cekImage = $("[name='image_old_jawaban_c']");
             image.value = "";
-            let cekImage = "{{$soal->detailSoal[2]->image}}";
-            if (cekImage) {
+            if (cekImage[0].value) {
                 imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[2]->image) }}";
             } else {
                 imgPreview.src = "";
-            }
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+                $('.img-clear-jawaban-c').addClass('d-none');
             }
         }
     }
+
+    $('.img-clear-jawaban-c').on('click', function() {
+        const image = document.querySelector('#image_jawaban_c');
+        const imgPreview = document.querySelector('.img-preview-jawaban-c');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-c').addClass('d-none');
+        $("[name='image_old_jawaban_c']").val("");
+    });
 
     function previewImageJawabanD() {
         const image = document.querySelector('#image_jawaban_d');
         const imgPreview = document.querySelector('.img-preview-jawaban-d');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                let cekImage = $("[name='image_old_jawaban_d']");
+                if (cekImage[0].value) {
+                    imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[3]->image) }}";
+                } else {
+                    imgPreview.src = "";
+                    $('.img-clear-jawaban-d').addClass('d-none');
+                }
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-d').removeClass('d-none');
+            }
+        } else {
+            let cekImage = $("[name='image_old_jawaban_d']");
             image.value = "";
-            let cekImage = "{{$soal->detailSoal[3]->image}}";
-            if (cekImage) {
+            if (cekImage[0].value) {
                 imgPreview.src = "{{ asset('soal/'. $soal->detailSoal[3]->image) }}";
             } else {
                 imgPreview.src = "";
-            }
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
+                $('.img-clear-jawaban-d').addClass('d-none');
             }
         }
     }
-</script>
 
-@if(session()->has('sukses'))
-<script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
+    $('.img-clear-jawaban-d').on('click', function() {
+        const image = document.querySelector('#image_jawaban_d');
+        const imgPreview = document.querySelector('.img-preview-jawaban-d');
 
-    Toast.fire({
-        icon: 'success',
-        title: '{{session("sukses")}}'
-    })
-</script>
-@endif
-
-<script>
-    $(document).on('click', '.btn-hapus', function(e) {
-        e.preventDefault();
-        var urlToRedirect = e.currentTarget.getAttribute('href');
-        Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Gambar akan dihapus!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = urlToRedirect
-            }
-        })
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-d').addClass('d-none');
+        $("[name='image_old_jawaban_d']").val("");
     });
 </script>
 

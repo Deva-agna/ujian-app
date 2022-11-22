@@ -25,10 +25,10 @@
             @foreach($soal->detailSoal as $data)
             <tr>
                 @if(!$data->kunci_jawaban)
-                <td>
+                <td style="width: 1px;">
                     <i class="fa-regular fa-circle"></i>
                 </td>
-                <td class="pl-1">
+                <td>
                     @if($data->image)
                     <img src="{{ asset('soal/'. $data->image) }}" class=" img-fluid img-preview-soal d-block" width="200px">
                     @endif
@@ -36,7 +36,7 @@
                         {!! $data->jawaban !!}
                     </div>
                 </td>
-                <td>
+                <td style="width: 1px;">
                     <form id="form-delete{{$data->id}}" action="{{route('soal.destroy.list.jawaban')}}" method="post" class="d-inline">
                         @method('put')
                         @csrf
@@ -90,7 +90,8 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!'
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
                 $(`#form-delete${id}`).submit();

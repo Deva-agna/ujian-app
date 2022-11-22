@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="password_lama">Old Password</label>
+                            <label for="password_lama">Password Lama</label>
                             <div class="input-group form-password-toggle input-group-merge">
                                 <input type="password" class="form-control form-control-sm @error('password_lama') is-invalid @enderror" id="password_lama" name="password_lama" placeholder="Old Password">
                                 <div class="input-group-append">
@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="password">New Password</label>
+                            <label for="password">Password Baru</label>
                             <div class="input-group form-password-toggle input-group-merge">
                                 <input type="password" id="password" name="password" class="form-control form-control-sm @error('password') is-invalid @enderror" placeholder="New Password">
                                 <div class="input-group-append">
@@ -49,12 +49,17 @@
                                         </svg>
                                     </div>
                                 </div>
+                                @error('password')
+                                <div class="invalid-feedback">
+                                    {{$message}}
+                                </div>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="password_confirmation">Retype New Password</label>
+                            <label for="password_confirmation">Konfirmasi Password Baru</label>
                             <div class="input-group form-password-toggle input-group-merge">
                                 <input type="password" class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="New Password">
                                 <div class="input-group-append">
@@ -63,6 +68,11 @@
                                             <line x1="1" y1="1" x2="23" y2="23"></line>
                                         </svg></div>
                                 </div>
+                                @error('password_confirmation')
+                                <div class="invalid-feedback">
+                                    {{$message}}
+                                </div>
+                                @enderror
                             </div>
                         </div>
                     </div>

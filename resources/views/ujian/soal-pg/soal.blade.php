@@ -46,7 +46,7 @@
     </div>
     <div class="card-body">
         @if($soal->image)
-        <img src="{{ asset('soal/'. $soal->image) }}" class=" img-fluid img-preview-soal d-block" width="200px">
+        <img src="{{ asset('soal/'. $soal->image) }}" class="mt-1 img-fluid img-preview-soal d-block" width="200px">
         @endif
         <p>
             {!! $soal->soal !!}

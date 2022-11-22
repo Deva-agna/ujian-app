@@ -228,7 +228,6 @@
                     return false;
                 }
             }
-            $('#loading').removeClass('d-none');
             return true;
         }
     </script>
@@ -248,6 +247,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (validasiForm()) {
+                        $('#loading').removeClass('d-none');
                         $('#myForm').submit();
                     }
                 }
@@ -273,6 +273,7 @@
                     minutes + " : " + seconds;
             } else {
                 clearInterval(x);
+                $('#loading').removeClass('d-none');
                 $('#myForm').submit();
             }
         }, 1000);

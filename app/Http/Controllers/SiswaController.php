@@ -41,18 +41,22 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama.*' => 'required',
+            'nama.*' => 'required|regex:/^[a-zA-Z.\s]+$/',
             'nis.*' => 'required|unique:siswas,nis',
             'sub_kelas.*' => 'required',
         ], [
             'nama.*.required' => 'Bidang Nama Siswa wajib diisi.',
+            'nama.*.regex' => 'Format Nama tidak valid.',
             'nis.*.required' => 'Bidang NIS wajib diisi.',
             'sub_kelas.*.required' => 'Bidang Kelas wajib diisi.',
             'nis.*.unique' => 'Data NIS sudah terdaftar',
         ]);
 
         for ($i = 0; $i < count($request->nama); $i++) {
-            $password = Str::random(5);
+            $password = "";
+            for ($k = 0; $k < 6; $k++) {
+                $password .= chr(rand(65, 90));
+            }
             Siswa::create([
                 'nama' => $request->nama[$i],
                 'nis' => $request->nis[$i],
@@ -79,11 +83,12 @@ class SiswaController extends Controller
         $siswa = Siswa::where('slug', $request->slug)->first();
 
         $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|regex:/^[a-zA-Z.\s]+$/',
             'nis' => 'required',
             'sub_kelas' => 'required',
         ], [
             'nama.required' => 'Bidang Nama Siswa wajib diisi.',
+            'nama.*.regex' => 'Format Nama tidak valid.',
             'nis.required' => 'Bidang NIS wajib diisi.',
             'sub_kelas.required' => 'Bidang Kelas wajib diisi.',
         ]);
@@ -118,7 +123,10 @@ class SiswaController extends Controller
 
     public function reset($slug)
     {
-        $password = Str::random(5);
+        $password = "";
+        for ($i = 0; $i < 6; $i++) {
+            $password .= chr(rand(65, 90));
+        }
         Siswa::where('slug', $slug)->update([
             'password' => Hash::make($password),
             'view_password' => $password,

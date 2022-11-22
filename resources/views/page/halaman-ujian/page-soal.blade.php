@@ -180,6 +180,7 @@
                     minutes + " : " + seconds;
             } else {
                 clearInterval(x);
+                $('#loading').removeClass('d-none');
                 $('#myForm').submit();
             }
         }, 1000);

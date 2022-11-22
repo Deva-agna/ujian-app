@@ -1,8 +1,8 @@
 @extends('layout.master')
 
-@section('halaman', 'Tambah Guru')
+@section('halaman', 'Edit Data Siswa')
 
-@section('title','Tambah Guru')
+@section('title','Edit Data Siswa')
 
 @section('master-user','sidebar-group-active open')
 

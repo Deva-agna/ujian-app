@@ -95,9 +95,14 @@
                             </div>
                         </div>
                         <input type="hidden" name="jawaban_id[]" value="{{ $data->id }}">
-                        <div class="form-group">
-                            <label for="gambar{{$loop->iteration}}">Pilih Gambar</label>
-                            <input type="file" class="form-control-file" id="gambar{{$loop->iteration}}" name="gambar[]">
+                        <div class="form-group mt-1">
+                            <div class="flex">
+                                <label for="gambar{{$loop->iteration}}" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban{{$loop->iteration}} btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden class="form-control-file" id="gambar{{$loop->iteration}}" name="gambar[]">
                             <img src="" class="img-modal img-fluid img-preview{{$loop->iteration}} d-block" style="margin-top: 5px; border-radius: 5px; opacity: 0.5; cursor: pointer;" width="50px">
                             <input type="hidden" id="cek_gambar{{$loop->iteration}}" name="cek_gambar[]" value="">
                         </div>
@@ -159,6 +164,7 @@
                     minutes + " : " + seconds;
             } else {
                 clearInterval(x);
+                $('#loading').removeClass('d-none');
                 $('#myForm').submit();
             }
         }, 1000);
@@ -167,27 +173,43 @@
 
         for (let index = 1; index <= panjangData; index++) {
             $(`#gambar${index}`).on("change", function() {
-                document.querySelector(`.img-preview${index}`).src = "";
-                if (this.files[0].size > 2 * 1048576) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Perhatian',
-                        text: 'Gambar yang diunggah maksimal 2 MB!',
-                    })
-                    this.value = "";
-                    $(`#cek_gambar${index}`).val("");
-                } else {
-                    const gambar = document.querySelector(`#gambar${index}`);
-                    const imgPreview = document.querySelector(`.img-preview${index}`);
+                const image = document.querySelector(`#gambar${index}`);
+                const imgPreview = document.querySelector(`.img-preview${index}`);
+                if (image.files.length > 0) {
+                    if (image.files[0].size > 2 * 1048576) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Perhatian',
+                            text: 'Gambar yang diunggah maksimal 2 MB!',
+                        })
+                        image.value = "";
+                        imgPreview.src = "";
+                        $(`.img-clear-jawaban${index}`).addClass('d-none');
+                    } else {
+                        imgPreview.style.display = 'block';
 
-                    const oFReader = new FileReader();
-                    oFReader.readAsDataURL(gambar.files[0]);
+                        const oFReader = new FileReader();
+                        oFReader.readAsDataURL(image.files[0]);
 
-                    oFReader.onload = function(oFREvent) {
-                        imgPreview.src = oFREvent.target.result;
+                        oFReader.onload = function(oFREvent) {
+                            imgPreview.src = oFREvent.target.result;
+                        }
+                        $(`.img-clear-jawaban${index}`).removeClass('d-none');
                     }
-                    $(`#cek_gambar${index}`).val(this.value);
+                } else {
+                    image.value = "";
+                    imgPreview.src = "";
+                    $(`.img-clear-jawaban${index}`).addClass('d-none');
                 }
+            });
+
+            $(`.img-clear-jawaban${index}`).on('click', function() {
+                const image = document.querySelector(`#gambar${index}`);
+                const imgPreview = document.querySelector(`.img-preview${index}`);
+
+                image.value = "";
+                imgPreview.src = "";
+                $(`.img-clear-jawaban${index}`).addClass('d-none');
             });
         }
 
@@ -226,7 +248,6 @@
                     return false;
                 }
             }
-            $('#loading').removeClass('d-none');
             return true;
         }
     </script>
@@ -236,15 +257,17 @@
             e.preventDefault();
             Swal.fire({
                 title: 'Perhatian!',
-                text: "Check terlebih dahulu jawaban anda, jika anda sudah yakin maka anda dapat menekan Ya, Simpan!",
+                text: "Cek terlebih dahulu jawaban anda, jika anda sudah yakin maka anda dapat menekan Ya, Simpan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Simpan!'
+                confirmButtonText: 'Ya, Simpan!',
+                cancelButtonText: 'Batal',
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (validasiForm()) {
+                        $('#loading').removeClass('d-none');
                         $('#myForm').submit();
                     }
                 }

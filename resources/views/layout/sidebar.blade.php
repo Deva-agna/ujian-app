@@ -17,7 +17,8 @@
             @if(Auth::guard('web')->user()->role == 'admin')
             <li class="@yield('dashboard') nav-item">
                 <a class="d-flex align-items-center" href="{{ route('dashboard-admin') }}">
-                    <i class="fa-solid fa-desktop"></i><span class="menu-title text-truncate">Dashboard</span>
+                    <i class="fa-solid fa-tv"></i>
+                    <span class="menu-title text-truncate">Dashboard</span>
                 </a>
             </li>
             <li class=" navigation-header">
@@ -57,7 +58,7 @@
             </li>
             <li class="nav-item @yield('jadwalBM')">
                 <a class="d-flex align-items-center" href="{{ route('jadwalBM') }}">
-                    <i class="fa-solid fa-clipboard-list"></i><span class="menu-title text-truncate">Master Jadwal BM</span>
+                    <i class="fa-solid fa-clipboard-list"></i><span class="menu-title text-truncate">Jadwal Mengajar</span>
                 </a>
             </li>
             <li class="nav-item @yield('naik-kelas')">
@@ -112,14 +113,14 @@
                 </a>
             </li>
             @endif
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#">
                     <form class="d-flex align-items-center" action="/logout" method="post">
                         @csrf
                         <i class="fa-solid fa-right-from-bracket"></i><button type="submit" style="border: none; background-color: transparent; color:#625F6E; padding: 0;">Log Out</button>
                     </form>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

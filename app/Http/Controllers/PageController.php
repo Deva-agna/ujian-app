@@ -6,7 +6,6 @@ use App\Models\DetailJawaban;
 use App\Models\DetailJawabanEssay;
 use App\Models\DetailSoal;
 use App\Models\DetailUjian;
-use App\Models\JadwalBM;
 use App\Models\Jawaban;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -49,17 +48,29 @@ class PageController extends Controller
         $request->validate([
             'nama' => 'required',
             'tanggal_lahir' => 'required',
+            'email' => 'required',
+            'nip' => 'required',
+        ], [
+            'nama.required' => 'Bidang nama wajib diisi.',
+            'tanggal_lahir.required' => 'Bidang tanggal lahir wajib diisi.',
+            'email.required' => 'Bidang email wajib diisi.',
+            'nip.required' => 'Bidang nip wajib diisi.',
         ]);
 
         if ($guru->email != $request->email) {
             $request->validate([
-                'email' => 'required|email:dns|unique:users',
+                'email' => 'email|unique:users',
+            ], [
+                'email.email' => 'Format email tidak sesuai.',
+                'email.unique' => 'Email sudah terdaftar.'
             ]);
         }
 
         if ($guru->nip != $request->nip) {
             $request->validate([
-                'nip' => 'required|unique:users',
+                'nip' => 'unique:users',
+            ], [
+                'nip.unique' => 'Nip sudah terdaftar.'
             ]);
         }
 
@@ -110,6 +121,13 @@ class PageController extends Controller
         $request->validate([
             'password_lama' => ['required'],
             'password' => ['required', 'min:6', 'confirmed'],
+            'password_confirmation' => 'required',
+        ], [
+            'password_lama.required' => 'Bidang password lama wajib diisi.',
+            'password.required' => 'Bidang password bru wajib diisi.',
+            'password_confirmation.required' => 'Bidang konfirmasi password bru wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.'
         ]);
 
         if (Hash::check($request->password_lama, auth()->user()->password)) {
@@ -119,7 +137,7 @@ class PageController extends Controller
             return redirect()->route('profile')->with('sukses', 'Password Berhasil di Update!');
         }
         throw ValidationException::withMessages([
-            'password_lama' => 'password yang kamu masukan tidak sesuai',
+            'password_lama' => 'Password yang kamu masukan tidak sesuai',
         ]);
     }
 

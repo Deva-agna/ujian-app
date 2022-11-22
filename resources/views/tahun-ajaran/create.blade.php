@@ -35,7 +35,7 @@
                         </div>
                         <div class="form-group">
                             <label for="kurikulum">Kurikulum <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('kurikulum') is-invalid @enderror" id="kurikulum" placeholder="Masukan Kurikulum" name="kurikulum">
+                            <input type="text" class="form-control @error('kurikulum') is-invalid @enderror" id="kurikulum" placeholder="Masukan Kurikulum" name="kurikulum" value="{{old('kurikulum')}}">
                             @error('kurikulum')
                             <div class="invalid-feedback">
                                 {{$message}}

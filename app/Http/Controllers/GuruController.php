@@ -82,17 +82,20 @@ class GuruController extends Controller
 
         $request->validate([
             'nama' => 'required',
+            'nip' => 'required',
+            'email' => 'required',
             'tanggal_lahir' => 'required',
         ], [
             'nama.required' => 'Kolom nama wajib di isi!',
-            'tanggal_lahir.required' => 'Kolom tanggal lahir wajib di isi!'
+            'nip.required' => 'Kolom NIP wajib di isi!',
+            'tanggal_lahir.required' => 'Kolom tanggal lahir wajib di isi!',
+            'email.required' => 'Kolom email wajib di isi!',
         ]);
 
         if ($guru->email != $request->email) {
             $request->validate([
                 'email' => 'required|unique:users',
             ], [
-                'email.required' => 'Kolom email wajib di isi!',
                 'email.unique' => 'Email sudah terdaftar!'
             ]);
         }
@@ -101,7 +104,6 @@ class GuruController extends Controller
             $request->validate([
                 'nip' => 'required|unique:users',
             ], [
-                'nip.required' => 'Kolom NIP wajib di isi!',
                 'nip.unique' => 'NIP Sudah terdaftar!'
             ]);
         }
@@ -150,7 +152,7 @@ class GuruController extends Controller
         $jadwalBM = JadwalBM::where('user_id', $guru->id)->first();
 
         if ($jadwalBM) {
-            return redirect()->route('guru')->with('error', 'Data guru memiliki relasi ke tabel lain!');
+            return redirect()->route('guru')->with('error', 'Data guru dengan nama ' . $guru->nama . ' digunakan pada tabel Jadwal Mengajar!');
         }
 
 

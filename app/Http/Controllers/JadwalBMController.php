@@ -9,6 +9,7 @@ use App\Models\TahunAjaran;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class JadwalBMController extends Controller
 {
@@ -65,15 +66,26 @@ class JadwalBMController extends Controller
             'mapel_id.required' => 'Bidang Mapel yang diampu wajib diisi.',
         ]);
 
-        JadwalBM::create([
-            'tahun_ajaran_id' => $request->tahun_ajaran_id,
-            'user_id' => $request->user_id,
-            'sub_kelas_id' => $request->sub_kelas,
-            'mapel_id' => $request->mapel_id,
-            'slug' => Str::of($request->hari . '-' . time())->slug('-'),
-        ]);
+        $jadwalBM = JadwalBM::where('user_id', $request->user_id)
+            ->where('sub_kelas_id', $request->sub_kelas)
+            ->where('mapel_id', $request->mapel_id)
+            ->first();
 
-        return redirect()->route('jadwalBM')->with('sukses', 'Data berhasil ditambah!');
+        if (!$jadwalBM) {
+            JadwalBM::create([
+                'tahun_ajaran_id' => $request->tahun_ajaran_id,
+                'user_id' => $request->user_id,
+                'sub_kelas_id' => $request->sub_kelas,
+                'mapel_id' => $request->mapel_id,
+                'slug' => Str::of($request->hari . '-' . time())->slug('-'),
+            ]);
+
+            return redirect()->route('jadwalBM')->with('sukses', 'Data berhasil ditambah!');
+        }
+
+        throw ValidationException::withMessages([
+            'error' => 'Data yang anda masukan sudah terdaftar pada tabel Jadwal Mengajar.',
+        ]);
     }
 
     public function edit($slug)
@@ -97,14 +109,31 @@ class JadwalBMController extends Controller
             'mapel_id.required' => 'Bidang Mapel yang diampu wajib diisi.',
         ]);
 
-        JadwalBM::where('slug', $request->slug)->update([
-            'user_id' => $request->user_id,
-            'sub_kelas_id' => $request->sub_kelas,
-            'mapel_id' => $request->mapel_id,
-            'slug' => Str::of($request->hari . '-' . time())->slug('-'),
-        ]);
+        $jadwalBM = JadwalBM::where('slug', $request->slug)->first();
+        if ($jadwalBM->user_id == $request->user_id && $jadwalBM->sub_kelas_id == $request->sub_kelas && $jadwalBM->mapel_id == $request->mapel_id) {
+            return redirect()->route('jadwalBM')->with('sukses', 'Data berhasil diupdate!');
+        } else {
+            $jadwalBM = JadwalBM::where('user_id', $request->user_id)
+                ->where('sub_kelas_id', $request->sub_kelas)
+                ->where('mapel_id', $request->mapel_id)
+                ->first();
+            if (!$jadwalBM) {
+                JadwalBM::where('slug', $request->slug)->update([
+                    'user_id' => $request->user_id,
+                    'sub_kelas_id' => $request->sub_kelas,
+                    'mapel_id' => $request->mapel_id,
+                    'slug' => Str::of($request->hari . '-' . time())->slug('-'),
+                ]);
 
-        return redirect()->route('jadwalBM')->with('sukses', 'Data berhasil diupdate!');
+                return redirect()->route('jadwalBM')->with('sukses', 'Data berhasil diupdate!');
+            }
+
+
+
+            throw ValidationException::withMessages([
+                'error' => 'Data yang anda masukan sudah terdaftar pada tabel Jadwal Mengajar.',
+            ]);
+        }
     }
 
     public function destroy($slug)

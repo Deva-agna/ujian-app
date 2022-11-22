@@ -32,7 +32,7 @@
                             <select name="jadwal_belajar" class="@error('jadwal_belajar') is-invalid @enderror form-control form-control-sm text-uppercase" id="jadwal_belajar">
                                 <option value="">Pilih</option>
                                 @foreach($jadwalBM_s as $jadwalBM)
-                                <option class="text-uppercase" {{ old('jadwal_belajar', $ujian->jadwal_b_m_id) == $jadwalBM->id ? 'selected' : '' }} value="{{$jadwalBM->id}}">{{ $jadwalBM->subKelas->kelas->nama_kelas }} | {{ $jadwalBM->subKelas->sub_kelas }} | {{ $jadwalBM->mapel->nama_mapel }} | {{$jadwalBM->hari}} | {{ $jadwalBM->jam_mulai }} - {{ $jadwalBM->jam_selesai }}</option>
+                                <option class="text-uppercase" {{ old('jadwal_belajar', $ujian->jadwal_b_m_id) == $jadwalBM->id ? 'selected' : '' }} value="{{$jadwalBM->id}}">{{ $jadwalBM->subKelas->kelas->nama_kelas }} | {{ $jadwalBM->subKelas->sub_kelas }} | {{ $jadwalBM->mapel->nama_mapel }}</option>
                                 @endforeach
                             </select>
                             @error('jadwal_belajar')
@@ -74,9 +74,9 @@
                             <label for="type_ujian">Type Ujian <span class="text-danger">*</span></label>
                             <select name="type_ujian" class="@error('type_ujian') is-invalid @enderror form-control form-control-sm text-uppercase" id="type_ujian">
                                 <option value="">Pilih</option>
-                                <option class="text-uppercase" {{ old('type_ujian', $ujian->type_ujian) == 'pg' ? 'selected' : '' }} value="pg">Pilihan Ganda</option>
-                                <option class="text-uppercase" {{ old('type_ujian', $ujian->type_ujian) == 'mc' ? 'selected' : '' }} value="mc">multiple choice</option>
-                                <option class="text-uppercase" {{ old('type_ujian', $ujian->type_ujian) == 'essay' ? 'selected' : '' }} value="essay">essay</option>
+                                <option class="text-uppercase" {{ old('type_ujian', $ujian->type_ujian) == 'pg' ? 'selected' : '' }} value="pg">PG</option>
+                                <option class="text-uppercase" {{ old('type_ujian', $ujian->type_ujian) == 'mc' ? 'selected' : '' }} value="mc">PG (Kompleks)</option>
+                                <option class="text-uppercase" {{ old('type_ujian', $ujian->type_ujian) == 'essay' ? 'selected' : '' }} value="essay">Esai/Uraian</option>
                             </select>
                             @error('type_ujian')
                             <div class="invalid-feedback">

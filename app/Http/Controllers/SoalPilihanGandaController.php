@@ -135,105 +135,128 @@ class SoalPilihanGandaController extends Controller
     public function update(Request $request)
     {
         $soal = Soal::where('slug', $request->slug)->first();
+        $imgSoal = $soal->image;
 
         if ($request->image_soal) {
-
-            $file = public_path('soal/') . $request->image_old_soal;
+            $file = public_path('soal/') . $soal->image;
             if (file_exists($file)) {
                 @unlink($file);
             }
-
             $imgSoal = Str::random(10) . '.' . time() . '.' . $request->image_soal->extension();
             $request->image_soal->move(public_path('soal'), $imgSoal);
-
-            Soal::where('slug', $request->slug)->update([
-                'image' => $imgSoal,
-            ]);
-        }
-
-        if ($request->image_jawaban_a) {
-
-            $file = public_path('soal/') . $request->image_old_jawaban_a;
-            if (file_exists($file)) {
-                @unlink($file);
+        } else {
+            if ($request->image_old_soal == "") {
+                $file = public_path('soal/') . $soal->image;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imgSoal = "";
+                }
             }
-
-            $imgJawabanA = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_a->extension();
-            $request->image_jawaban_a->move(public_path('soal'), $imgJawabanA);
-
-            DetailSoal::where('id', $request->jawaban_a_id)->update([
-                'image' => $imgJawabanA,
-            ]);
         }
-
-        if ($request->image_jawaban_b) {
-
-            $file = public_path('soal/') . $request->image_old_jawaban_b;
-            if (file_exists($file)) {
-                @unlink($file);
-            }
-
-            $imgJawabanB = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_b->extension();
-            $request->image_jawaban_b->move(public_path('soal'), $imgJawabanB);
-
-            DetailSoal::where('id', $request->jawaban_b_id)->update([
-                'image' => $imgJawabanB,
-            ]);
-        }
-
-        if ($request->image_jawaban_c) {
-
-            $file = public_path('soal/') . $request->image_old_jawaban_c;
-            if (file_exists($file)) {
-                @unlink($file);
-            }
-
-            $imgJawabanC = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_c->extension();
-            $request->image_jawaban_c->move(public_path('soal'), $imgJawabanC);
-
-            DetailSoal::where('id', $request->jawaban_c_id)->update([
-                'image' => $imgJawabanC,
-            ]);
-        }
-
-        if ($request->image_jawaban_d) {
-
-            $file = public_path('soal/') . $request->image_old_jawaban_d;
-            if (file_exists($file)) {
-                @unlink($file);
-            }
-
-            $imgJawabanD = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_d->extension();
-            $request->image_jawaban_d->move(public_path('soal'), $imgJawabanD);
-
-            DetailSoal::where('id', $request->jawaban_d_id)->update([
-                'image' => $imgJawabanD,
-            ]);
-        }
-
         Soal::where('slug', $request->slug)->update([
             'title' => $request->deskripsi,
             'soal' => $request->soal,
+            'image' => $imgSoal,
         ]);
 
-        DetailSoal::where('id', $request->jawaban_a_id)->update([
+        $jawabanA = DetailSoal::where('id', $request->jawaban_a_id)->first();
+        $imgJawabanA = $jawabanA->image;
+        if ($request->image_jawaban_a) {
+            $file = public_path('soal/') . $jawabanA->image;
+            if (file_exists($file)) {
+                @unlink($file);
+            }
+            $imgJawabanA = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_a->extension();
+            $request->image_jawaban_a->move(public_path('soal'), $imgJawabanA);
+        } else {
+            if ($request->image_old_jawaban_a == "") {
+                $file = public_path('soal/') . $jawabanA->image;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imgJawabanA = "";
+                }
+            }
+        }
+
+        DetailSoal::where('id', $jawabanA->id)->update([
             'jawaban' => $request->jawaban_a,
-            'kunci_jawaban' => false
+            'kunci_jawaban' => false,
+            'image' => $imgJawabanA,
         ]);
 
-        DetailSoal::where('id', $request->jawaban_b_id)->update([
+        $jawabanB = DetailSoal::where('id', $request->jawaban_b_id)->first();
+        $imgJawabanB = $jawabanB->image;
+        if ($request->image_jawaban_b) {
+            $file = public_path('soal/') . $jawabanB->image;
+            if (file_exists($file)) {
+                @unlink($file);
+            }
+            $imgJawabanB = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_b->extension();
+            $request->image_jawaban_b->move(public_path('soal'), $imgJawabanB);
+        } else {
+            if ($request->image_old_jawaban_b == "") {
+                $file = public_path('soal/') . $jawabanB->image;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imgJawabanB = "";
+                }
+            }
+        }
+
+        DetailSoal::where('id', $jawabanB->id)->update([
             'jawaban' => $request->jawaban_b,
-            'kunci_jawaban' => false
+            'kunci_jawaban' => false,
+            'image' => $imgJawabanB,
         ]);
 
-        DetailSoal::where('id', $request->jawaban_c_id)->update([
+        $jawabanC = DetailSoal::where('id', $request->jawaban_c_id)->first();
+        $imgJawabanC = $jawabanC->image;
+        if ($request->image_jawaban_c) {
+            $file = public_path('soal/') . $jawabanC->image;
+            if (file_exists($file)) {
+                @unlink($file);
+            }
+            $imgJawabanC = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_c->extension();
+            $request->image_jawaban_c->move(public_path('soal'), $imgJawabanC);
+        } else {
+            if ($request->image_old_jawaban_c == "") {
+                $file = public_path('soal/') . $jawabanC->image;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imgJawabanC = "";
+                }
+            }
+        }
+
+        DetailSoal::where('id', $jawabanC->id)->update([
             'jawaban' => $request->jawaban_c,
-            'kunci_jawaban' => false
+            'kunci_jawaban' => false,
+            'image' => $imgJawabanC,
         ]);
 
-        DetailSoal::where('id', $request->jawaban_d_id)->update([
+        $jawabanD = DetailSoal::where('id', $request->jawaban_d_id)->first();
+        $imgJawabanD = $jawabanD->image;
+        if ($request->image_jawaban_d) {
+            $file = public_path('soal/') . $jawabanD->image;
+            if (file_exists($file)) {
+                @unlink($file);
+            }
+            $imgJawabanD = Str::random(10) . '.' . time() . '.' . $request->image_jawaban_d->extension();
+            $request->image_jawaban_d->move(public_path('soal'), $imgJawabanD);
+        } else {
+            if ($request->image_old_jawaban_d == "") {
+                $file = public_path('soal/') . $jawabanD->image;
+                if (file_exists($file)) {
+                    @unlink($file);
+                    $imgJawabanD = "";
+                }
+            }
+        }
+
+        DetailSoal::where('id', $jawabanD->id)->update([
             'jawaban' => $request->jawaban_d,
-            'kunci_jawaban' => false
+            'kunci_jawaban' => false,
+            'image' => $imgJawabanD,
         ]);
 
         if ($request->kunci_jawaban == "a") {

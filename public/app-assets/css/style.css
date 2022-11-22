@@ -126,6 +126,10 @@
 	#kartu-pelajar .deskripsi {
 		display: none;
 	}
+
+	.ql-editor p {
+		font-size: 13px;
+	}
 }
 
 .warp-loading {

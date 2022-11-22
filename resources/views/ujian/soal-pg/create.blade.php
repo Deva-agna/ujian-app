@@ -19,10 +19,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/mathquill/mathquill4quill.css') }}">
 
 <style>
-    .waves-effect {
-        position: static;
-    }
-
     .ql-snow .ql-tooltip {
         position: relative;
     }
@@ -54,9 +50,14 @@
                             <h1 class="card-title">Soal</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_soal">Gambar</label>
-                            <input type="file" name="image_soal" class="form-control-file mb-1" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
-                            <img src="" class=" img-fluid img-preview-soal d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_soal" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-soal btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_soal" class="form-control-file" name="image_soal" id="image_soal" accept="image/*" onchange="previewImageSoal()">
+                            <img src="" class="mt-1 img-fluid img-preview-soal d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Pertanyaan</label>
@@ -72,9 +73,14 @@
                             <h1 class="card-title">Jawaban A</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_a">Gambar</label>
-                            <input type="file" name="image_jawaban_a" class="form-control-file mb-1" name="image_jawaban_a" id="image_jawaban_a" accept="image/*" onchange="previewImageJawabanA()">
-                            <img src="" class=" img-fluid img-preview-jawaban-a d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_jawaban_a" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-a btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_a" class="form-control-file mb-1" name="image_jawaban_a" id="image_jawaban_a" accept="image/*" onchange="previewImageJawabanA()">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-a d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Jawaban</label>
@@ -90,9 +96,14 @@
                             <h1 class="card-title">Jawaban B</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_b">Gambar</label>
-                            <input type="file" name="image_jawaban_b" class="form-control-file mb-1" name="image_jawaban_b" id="image_jawaban_b" accept="image/*" onchange="previewImageJawabanB()">
-                            <img src="" class=" img-fluid img-preview-jawaban-b d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_jawaban_b" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-b btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_b" class="form-control-file mb-1" name="image_jawaban_b" id="image_jawaban_b" accept="image/*" onchange="previewImageJawabanB()">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-b d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Jawaban</label>
@@ -108,9 +119,14 @@
                             <h1 class="card-title">Jawaban C</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_c">Gambar</label>
-                            <input type="file" name="image_jawaban_c" class="form-control-file mb-1" name="image_jawaban_c" id="image_jawaban_c" accept="image/*" onchange="previewImageJawabanC()">
-                            <img src="" class=" img-fluid img-preview-jawaban-c d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_jawaban_c" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-c btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_c" class="form-control-file mb-1" name="image_jawaban_c" id="image_jawaban_c" accept="image/*" onchange="previewImageJawabanC()">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-c d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Jawaban</label>
@@ -126,9 +142,14 @@
                             <h1 class="card-title">Jawaban D</h1>
                         </div>
                         <div class="form-group">
-                            <label for="image_jawaban_d">Gambar</label>
-                            <input type="file" name="image_jawaban_d" class="form-control-file mb-1" name="image_jawaban_d" id="image_jawaban_d" accept="image/*" onchange="previewImageJawabanD()">
-                            <img src="" class=" img-fluid img-preview-jawaban-d d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_jawaban_d" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban-d btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban_d" class="form-control-file mb-1" name="image_jawaban_d" id="image_jawaban_d" accept="image/*" onchange="previewImageJawabanD()">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban-d d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Jawaban</label>
@@ -188,12 +209,8 @@
     let enableMathQuillFormulaAuthoring = mathquill4quill();
     var tools = [
         [{
-                font: []
-            },
-            {
-                size: []
-            }
-        ],
+            size: []
+        }],
         ['bold', 'italic', 'underline', 'strike'],
         [{
                 color: []
@@ -215,8 +232,6 @@
             {
                 header: '2'
             },
-            'blockquote',
-            'code-block'
         ],
         [{
                 list: 'ordered'
@@ -231,14 +246,7 @@
                 indent: '+1'
             }
         ],
-        [
-            'direction',
-            {
-                align: []
-            }
-        ],
         ['formula'],
-        ['clean']
     ]
 
     var Editors = ['#input-soal', '#input-jawaban-a', '#input-jawaban-b', '#input-jawaban-c', '#input-jawaban-d'];
@@ -368,121 +376,201 @@
     function previewImageSoal() {
         const image = document.querySelector('#image_soal');
         const imgPreview = document.querySelector('.img-preview-soal');
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-soal').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-soal').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-soal').addClass('d-none');
         }
     }
+
+    $('.img-clear-soal').on('click', function() {
+        const image = document.querySelector('#image_soal');
+        const imgPreview = document.querySelector('.img-preview-soal');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-soal').addClass('d-none');
+    });
 
     function previewImageJawabanA() {
         const image = document.querySelector('#image_jawaban_a');
         const imgPreview = document.querySelector('.img-preview-jawaban-a');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-jawaban-a').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-a').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-jawaban-a').addClass('d-none');
         }
     }
+
+    $('.img-clear-jawaban-a').on('click', function() {
+        const image = document.querySelector('#image_jawaban_a');
+        const imgPreview = document.querySelector('.img-preview-jawaban-a');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-a').addClass('d-none');
+    });
 
     function previewImageJawabanB() {
         const image = document.querySelector('#image_jawaban_b');
         const imgPreview = document.querySelector('.img-preview-jawaban-b');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-jawaban-b').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-b').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-jawaban-b').addClass('d-none');
         }
     }
+
+    $('.img-clear-jawaban-b').on('click', function() {
+        const image = document.querySelector('#image_jawaban_b');
+        const imgPreview = document.querySelector('.img-preview-jawaban-b');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-b').addClass('d-none');
+    });
 
     function previewImageJawabanC() {
         const image = document.querySelector('#image_jawaban_c');
         const imgPreview = document.querySelector('.img-preview-jawaban-c');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-jawaban-c').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-c').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-jawaban-c').addClass('d-none');
         }
     }
+
+    $('.img-clear-jawaban-c').on('click', function() {
+        const image = document.querySelector('#image_jawaban_c');
+        const imgPreview = document.querySelector('.img-preview-jawaban-c');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-c').addClass('d-none');
+    });
 
     function previewImageJawabanD() {
         const image = document.querySelector('#image_jawaban_d');
         const imgPreview = document.querySelector('.img-preview-jawaban-d');
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-jawaban-d').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban-d').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-jawaban-d').addClass('d-none');
         }
     }
+
+    $('.img-clear-jawaban-d').on('click', function() {
+        const image = document.querySelector('#image_jawaban_d');
+        const imgPreview = document.querySelector('.img-preview-jawaban-d');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban-d').addClass('d-none');
+    });
 </script>
 
 @endsection

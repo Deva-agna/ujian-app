@@ -3,7 +3,7 @@
         <i class="fa-solid fa-ellipsis-vertical"></i>
     </button>
     <div class="dropdown-menu">
-        <a href="{{ route('reset.password.guru', $model->slug) }}" class="dropdown-item">
+        <a href="{{ route('reset.password.guru', $model->slug) }}" class="dropdown-item btn-reset">
             <i class="fa-solid fa-rotate"></i>
             <span>Reset Password</span>
         </a>

@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'auth']);
-Route::post('/logout', [LoginController::class, 'logout']);
+Route::put('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth:web', 'checkRole:admin,guru']], function () {
     //----------------------
@@ -118,6 +118,7 @@ Route::group(['middleware' => ['auth:web', 'checkRole:guru']], function () {
     Route::put('/ujian/update', [UjianController::class, 'update'])->name('ujian.update');
     Route::delete('/ujian/{slug}/destroy', [UjianController::class, 'destroy'])->name('ujian.destroy');
     Route::patch('/ujian/update/status', [UjianController::class, 'status'])->name('ujian.update.status');
+    Route::get('/lihat/soal/{ujian:slug}', [UjianController::class, 'lihatSoal'])->name('lihat.soal');
     //----------------------
     // Kelola Soal Pilihan Ganda
     //----------------------

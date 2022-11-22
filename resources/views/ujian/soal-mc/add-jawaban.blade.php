@@ -20,8 +20,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/vendors/css/editors/quill/mathquill/mathquill4quill.css') }}">
 
 <style>
-    .waves-effect {
-        position: static;
+    .ql-snow .ql-tooltip {
+        position: relative;
     }
 </style>
 @endsection
@@ -37,11 +37,16 @@
                 <input type="hidden" name="slug" value="{{$soal->slug}}">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="card-title mb-0">Jawaban</h1>
+                        <h1 class="card-title">Jawaban</h1>
                         <div class="form-group">
-                            <label for="image_jawaban">Gambar</label>
-                            <input type="file" name="image_jawaban" class="form-control-file mb-1" id="image_jawaban" accept="image/*">
-                            <img src="" class=" img-fluid img-preview-jawaban d-block" width="180px">
+                            <div class="flex">
+                                <label for="image_jawaban" class="mb-0 btn btn-sm btn-outline-secondary waves-effect"><i class="fa-solid fa-image"></i> Gambar</label>
+                                <button type="button" class="img-clear-jawaban btn btn-sm btn-icon btn-outline-secondary waves-effect d-none">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </button>
+                            </div>
+                            <input type="file" hidden name="image_jawaban" class="form-control-file mb-1" id="image_jawaban" accept="image/*">
+                            <img src="" class="mt-1 img-fluid img-preview-jawaban d-block" width="180px">
                         </div>
                         <div class="form-group">
                             <label>Jawaban</label>
@@ -101,8 +106,6 @@
             {
                 header: '2'
             },
-            'blockquote',
-            'code-block'
         ],
         [{
                 list: 'ordered'
@@ -115,12 +118,6 @@
             },
             {
                 indent: '+1'
-            }
-        ],
-        [
-            'direction',
-            {
-                align: []
             }
         ],
         ['formula'],
@@ -163,24 +160,41 @@
         const image = document.querySelector('#image_jawaban');
         const imgPreview = document.querySelector('.img-preview-jawaban');
 
-        if (image.files[0].size > 2 * 1048576) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Perhatian',
-                text: 'Gambar yang diunggah maksimal 2 MB!',
-            })
+        if (image.files.length > 0) {
+            if (image.files[0].size > 2 * 1048576) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Perhatian',
+                    text: 'Gambar yang diunggah maksimal 2 MB!',
+                })
+                image.value = "";
+                imgPreview.src = "";
+                $('.img-clear-jawaban').addClass('d-none');
+            } else {
+                imgPreview.style.display = 'block';
+
+                const oFReader = new FileReader();
+                oFReader.readAsDataURL(image.files[0]);
+
+                oFReader.onload = function(oFREvent) {
+                    imgPreview.src = oFREvent.target.result;
+                }
+                $('.img-clear-jawaban').removeClass('d-none');
+            }
+        } else {
             image.value = "";
             imgPreview.src = "";
-        } else {
-            imgPreview.style.display = 'block';
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
+            $('.img-clear-jawaban').addClass('d-none');
         }
+    });
+
+    $('.img-clear-jawaban').on('click', function() {
+        const image = document.querySelector('#image_jawaban');
+        const imgPreview = document.querySelector('.img-preview-jawaban');
+
+        image.value = "";
+        imgPreview.src = "";
+        $('.img-clear-jawaban').addClass('d-none');
     });
 
     function removeTags(str) {
