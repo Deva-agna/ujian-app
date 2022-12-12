@@ -17,6 +17,7 @@ class Nilai extends Model
         'nilai',
         'benar',
         'salah',
+        'slug',
     ];
 
     public function siswa()

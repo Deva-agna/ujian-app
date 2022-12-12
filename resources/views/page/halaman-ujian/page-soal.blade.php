@@ -34,8 +34,19 @@
 
 <body>
 
-    <div id="loading" class="warp-loading d-none">
-        <div class="loading-submit">
+    <div id="presubmit" class="loadingio-spinner-dual-ball-gqrevhuqhbs mt-n3 d-none">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="preload" class="loadingio-spinner-dual-ball-gqrevhuqhbs mt-n3">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
 
@@ -150,6 +161,7 @@
     <script src="{{ asset('app-assets/css/font-awesome-6.1.1/js/all.min.js') }}"></script>
 
     <script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts.js') }}"></script>
 
     <script>
         $(`.img-modal`).on("click", function(e) {
@@ -180,13 +192,22 @@
                     minutes + " : " + seconds;
             } else {
                 clearInterval(x);
-                $('#loading').removeClass('d-none');
+                localStorage.clear();
+                $('#presubmit').removeClass('d-none');
                 $('#myForm').submit();
             }
         }, 1000);
 
         for (let index = 1; index <= "{{$nilai->jawaban->count()}}"; index++) {
+            let checkLocalStorage = localStorage.getItem(`no${index}`);
+            if (checkLocalStorage) {
+                document.getElementById(checkLocalStorage).checked = true;
+                $(`#noSoal${index}`).addClass("badge-light-success").removeClass("badge-light-danger");
+            }
+        }
+        for (let index = 1; index <= "{{$nilai->jawaban->count()}}"; index++) {
             $(`.jawaban${index}`).on('change', function() {
+                localStorage.setItem(`no${index}`, this.id);
                 $(`#jawaban_hidden${index}`).val(this.value);
                 $(`#noSoal${index}`).addClass("badge-light-success").removeClass("badge-light-danger");
             });
@@ -227,7 +248,7 @@
             e.preventDefault();
             Swal.fire({
                 title: 'Perhatian!',
-                text: "Check terlebih dahulu jawaban anda, jika anda sudah yakin maka anda dapat menekan Ya, Simpan!",
+                text: "Cek terlebih dahulu jawaban anda, jika anda sudah yakin maka anda dapat menekan Ya, Simpan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -237,12 +258,21 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (validasiForm()) {
-                        $('#loading').removeClass('d-none');
+                        localStorage.clear();
+                        $('#presubmit').removeClass('d-none');
                         $('#myForm').submit();
                     }
                 }
             })
         });
+    </script>
+
+    <script>
+        var preload = document.getElementById("preload");
+
+        window.addEventListener('load', function() {
+            preload.style.display = 'none';
+        })
     </script>
 
 </body>

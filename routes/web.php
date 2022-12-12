@@ -187,6 +187,12 @@ Route::group(['middleware' => ['auth:siswa', 'checkRole:siswa']], function () {
     Route::get('/page/{slug}/konfirmasi-token', [PageController::class, 'pageKonfirmasiToken'])->name('page.konfirmasi.token');
     Route::put('/check/token', [PageController::class, 'checkToken'])->name('check.token');
 
+    Route::get('/ujian/done', [PageController::class, 'ujianDone'])->name('ujian.done');
+
+    // Route Halaman Ujian
+    Route::get('/halaman-ujian-pg/{nilai:slug}', [PageController::class, 'halamanUjianPG'])->name('halaman.ujian.pg');
+    Route::get('/halaman-ujian-pg-kompleks/{nilai:slug}', [PageController::class, 'halamanUjianPGKompleks'])->name('halaman.ujian.pg.kompleks');
+    Route::get('/halaman-ujian-esai-uraian/{nilai:slug}', [PageController::class, 'halamanUjianEsai'])->name('halaman.ujian.esai.uraian');
 
     Route::post('/penilaian/pg/store', [PenilaianController::class, 'penilaianPg'])->name('penilaian.pg.store');
     Route::put('/penilaian/mc/store', [PenilaianController::class, 'penilaianMc'])->name('penilaian.mc.store');

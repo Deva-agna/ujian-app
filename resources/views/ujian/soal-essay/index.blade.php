@@ -83,7 +83,7 @@
                                 @csrf
                                 <input type="hidden" name="slug_soal" value="{{$list->soal->slug}}">
                                 <input type="hidden" name="slug_ujian" value="{{$ujian->slug}}">
-                                <button class="btn-hapus dropdown-item" data-id="{{$list->soal->id}}" style="background-color: transparent;">
+                                <button class="btn-hapus dropdown-item w-100" data-id="{{$list->soal->id}}">
                                     <i class="fa-solid fa-trash-can"></i>
                                     <span>Hapus</span>
                                 </button>

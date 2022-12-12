@@ -33,10 +33,22 @@
 </head>
 
 <body>
-    <div id="loading" class="warp-loading d-none">
-        <div class="loading-submit">
+    <div id="presubmit" class="loadingio-spinner-dual-ball-gqrevhuqhbs mt-n3 d-none">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
+
+    <div id="preload" class="loadingio-spinner-dual-ball-gqrevhuqhbs mt-n3">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
     <span id="durasi" class="badge badge-info fixed-top" style="border-radius: 0;">0 : 0 : 0 : 0</span>
     <section id="container">
         <div class="card mt-3">
@@ -108,7 +120,7 @@
                         </div>
                         <div class="form-group">
                             <label for="jawaban">Jawaban</label>
-                            <textarea class="form-control" id="jawaban" rows="2" placeholder="Masukan jawaban anda disini!" name="jawaban[]"></textarea>
+                            <textarea class="form-control" id="jawaban{{$loop->iteration}}" rows="2" placeholder="Masukan jawaban anda disini!" name="jawaban[]"></textarea>
                         </div>
                         <hr>
                     </div>
@@ -144,11 +156,21 @@
     <script src="{{ asset('app-assets/css/font-awesome-6.1.1/js/all.min.js') }}"></script>
 
     <script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts.js') }}"></script>
 
     <script>
         var waktuMulai = new Date("{{$nilai->start}}").getTime();
         var menit = "{{$nilai->ujian->waktu_ujian}}";
         var waktuSelesai = new Date(waktuMulai + menit * 60000);
+
+        let panjangData = '{{ $nilai->jawaban->count() }}';
+
+        for (let index = 1; index <= panjangData; index++) {
+            let val = localStorage.getItem(`no${index}`);
+            if (val) {
+                $(`#jawaban${index}`).val(val);
+            }
+        }
 
         var x = setInterval(function() {
             var now = new Date().getTime();
@@ -164,14 +186,18 @@
                     minutes + " : " + seconds;
             } else {
                 clearInterval(x);
-                $('#loading').removeClass('d-none');
+                localStorage.clear();
+                $('#presubmit').removeClass('d-none');
                 $('#myForm').submit();
             }
         }, 1000);
 
-        let panjangData = '{{ $nilai->jawaban->count() }}';
-
         for (let index = 1; index <= panjangData; index++) {
+
+            $(`#jawaban${index}`).keyup(function() {
+                localStorage.setItem(`no${index}`, this.value);
+            })
+
             $(`#gambar${index}`).on("change", function() {
                 const image = document.querySelector(`#gambar${index}`);
                 const imgPreview = document.querySelector(`.img-preview${index}`);
@@ -267,12 +293,21 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (validasiForm()) {
-                        $('#loading').removeClass('d-none');
+                        localStorage.clear();
+                        $('#presubmit').removeClass('d-none');
                         $('#myForm').submit();
                     }
                 }
             })
         });
+    </script>
+
+    <script>
+        var preload = document.getElementById("preload");
+
+        window.addEventListener('load', function() {
+            preload.style.display = 'none';
+        })
     </script>
 
 </body>

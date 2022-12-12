@@ -28,6 +28,6 @@ class CreateEssayController extends Controller
             'status' => true,
         ]);
 
-        return view('page.ujian-done');
+        return redirect()->route('ujian.done');
     }
 }

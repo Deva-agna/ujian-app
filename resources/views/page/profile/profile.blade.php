@@ -110,7 +110,7 @@
 
 <script>
     const imgPreview = document.querySelector('#account-upload-img');
-    const src = imgPreview.src;
+    let src = imgPreview.src;
 
     function previewImag() {
         const image = document.querySelector('#account-upload');

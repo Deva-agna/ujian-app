@@ -50,6 +50,13 @@
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
     @yield('loading-page')
+    <div id="preload" class="loadingio-spinner-dual-ball-gqrevhuqhbs">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <!-- BEGIN: Header-->
     @include('layout.navbar')
     <!-- END: Header-->
@@ -100,6 +107,13 @@
     <!-- END: Page JS-->
 
     @yield('script')
+    <script>
+        var preload = document.getElementById("preload");
+
+        window.addEventListener('load', function() {
+            preload.style.display = 'none';
+        })
+    </script>
 </body>
 <!-- END: Body-->
 

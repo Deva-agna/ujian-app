@@ -32,10 +32,22 @@
 </head>
 
 <body>
-    <div id="loading" class="warp-loading d-none">
-        <div class="loading-submit">
+    <div id="presubmit" class="loadingio-spinner-dual-ball-gqrevhuqhbs mt-n3 d-none">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
         </div>
     </div>
+
+    <div id="preload" class="loadingio-spinner-dual-ball-gqrevhuqhbs mt-n3">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
     <span id="durasi" class="badge badge-info fixed-top" style="border-radius: 0;">0 : 0 : 0 : 0</span>
     <section id="container">
         <div class="card card-custome mt-3">
@@ -103,7 +115,7 @@
                             <tr>
                                 <td style="padding-left:15px; white-space: normal;" class="ql-editor">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="jawaban<?= $i ?> custom-control-input" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="jawaban[]" value="{{$jawaban->id}}">
+                                        <input type="checkbox" class="jawaban<?= $i ?> custom-control-input local-storage" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="jawaban[]" value="{{$jawaban->id}}">
                                         <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
                                             @if($jawaban->detailSoal->image)
                                             <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
@@ -149,6 +161,7 @@
     <script src="{{ asset('app-assets/css/font-awesome-6.1.1/js/all.min.js') }}"></script>
 
     <script src="{{ asset('app-assets/js/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('app-assets/js/scripts.js') }}"></script>
 
     <script>
         $(`.img-modal`).on("click", function(e) {
@@ -158,6 +171,21 @@
             const myModal = new bootstrap.Modal(document.getElementById('modal-foto'));
             myModal.show();
         })
+
+        let dataLocalStorage = document.querySelectorAll('.local-storage');
+        for (let data of dataLocalStorage) {
+            console.log(data.id);
+            if (val = localStorage.getItem(`${data.id}`)) {
+                document.getElementById(val).checked = true;
+            }
+            $(`#${data.id}`).on('change', function() {
+                if (data.checked == true) {
+                    localStorage.setItem(`${data.id}`, data.id);
+                } else {
+                    localStorage.removeItem(`${data.id}`);
+                }
+            })
+        }
     </script>
 
     <script>
@@ -182,8 +210,16 @@
         });
 
         function checkCheckbox(index, limit) {
+            if ($(`input.jawaban${index}:checked`).length >= limit) {
+                $(`#noSoal${index}`).addClass("badge-light-success").removeClass("badge-light-danger");
+                $(`.informasi${index}`).css({
+                    "display": "none",
+                });
+            }
+
             $(`input.jawaban${index}`).on('change', function(evt) {
                 if ($(`input.jawaban${index}:checked`).length > limit) {
+                    localStorage.removeItem(`${this.id}`)
                     this.checked = false;
                 }
 
@@ -247,7 +283,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (validasiForm()) {
-                        $('#loading').removeClass('d-none');
+                        localStorage.clear();
+                        $('#presubmit').removeClass('d-none');
                         $('#myForm').submit();
                     }
                 }
@@ -273,10 +310,19 @@
                     minutes + " : " + seconds;
             } else {
                 clearInterval(x);
-                $('#loading').removeClass('d-none');
+                localStorage.clear();
+                $('#presubmit').removeClass('d-none');
                 $('#myForm').submit();
             }
         }, 1000);
+    </script>
+
+    <script>
+        var preload = document.getElementById("preload");
+
+        window.addEventListener('load', function() {
+            preload.style.display = 'none';
+        })
     </script>
 </body>
 

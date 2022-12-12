@@ -7,8 +7,11 @@
 @section('ujian','active')
 
 @section('loading-page')
-<div id="loading" class="warp-loading d-none">
-    <div class="loading-submit">
+<div id="presubmit" class="loadingio-spinner-dual-ball-gqrevhuqhbs d-none">
+    <div class="ldio-g2z2ox57oa">
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
 </div>
 @endsection
@@ -133,7 +136,7 @@
     }
 
     $('#btn-mulai').on('click', function() {
-        $('#loading').removeClass('d-none');
+        $('#presubmit').removeClass('d-none');
     })
 </script>
 

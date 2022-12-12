@@ -22,6 +22,7 @@ class CreateNilaisTable extends Migration
             $table->string('nilai')->default('-');
             $table->string('benar')->default('-');
             $table->string('salah')->default('-');
+            $table->string('slug');
             $table->timestamps();
         });
     }

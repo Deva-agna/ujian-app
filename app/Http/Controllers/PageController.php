@@ -153,7 +153,11 @@ class PageController extends Controller
             $id_jadwalBM[$key] = $data->id;
         }
 
-        $ujian = Ujian::with(['jadwalBM.mapel'])->where('status', 'active')->whereIn('jadwal_b_m_id', $id_jadwalBM)->orderBy('waktu_mulai', 'desc')->get();
+        $ujian = Ujian::with(['jadwalBM.mapel', 'nilai' => function ($query) {
+            $query->where('siswa_id', auth()->user()->id);
+        }])->where('status', 'active')->whereIn('jadwal_b_m_id', $id_jadwalBM)->orderBy('waktu_mulai', 'desc')->get();
+
+        // return $ujian;
 
         return view('page.halaman-ujian.index', compact('ujian'));
     }
@@ -165,14 +169,14 @@ class PageController extends Controller
 
         if ($nilai) {
             if ($nilai->status) {
-                return view('page.ujian-done');
+                return redirect()->route('ujian.done');
             } else {
                 if ($ujian->type_ujian == 'pg') {
-                    return view('page.halaman-ujian.page-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.pg', $nilai->id);
                 } elseif ($ujian->type_ujian == 'mc') {
-                    return view('page.halaman-ujian.page-mc-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.pg.kompleks', $nilai->slug);
                 } else {
-                    return view('page.halaman-ujian.page-esay-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.esai.uraian', $nilai->slug);
                 }
             }
         } else {
@@ -182,9 +186,6 @@ class PageController extends Controller
 
     public function checkToken(Request $request)
     {
-
-        date_default_timezone_set("Asia/Jakarta");
-
         $now = Carbon::now();
 
         $request->validate([
@@ -199,11 +200,11 @@ class PageController extends Controller
             $nilai = Nilai::with(['jawaban.soal.detailSoal', 'jawaban.detailJawaban.detailSoal'])->where('siswa_id', Auth::guard('siswa')->user()->id)->where('ujian_id', $ujian->id)->first();
             if ($nilai) {
                 if ($ujian->type_ujian == 'pg') {
-                    return view('page.halaman-ujian.page-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.pg', $nilai->slug);
                 } elseif ($ujian->type_ujian == 'mc') {
-                    return view('page.halaman-ujian.page-mc-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.pg.kompleks', $nilai->slug);
                 } else {
-                    return view('page.halaman-ujian.page-esay-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.esai.uraian', $nilai->slug);
                 }
             } else {
                 $nilai = Nilai::create([
@@ -242,11 +243,11 @@ class PageController extends Controller
                 }
 
                 if ($ujian->type_ujian == 'pg') {
-                    return view('page.halaman-ujian.page-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.pg', $nilai->slug);
                 } elseif ($ujian->type_ujian == 'mc') {
-                    return view('page.halaman-ujian.page-mc-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.pg.kompleks', $nilai->slug);
                 } else {
-                    return view('page.halaman-ujian.page-esay-soal', compact('nilai'));
+                    return redirect()->route('halaman.ujian.esai.uraian', $nilai->slug);
                 }
             }
         } else {
@@ -258,5 +259,25 @@ class PageController extends Controller
     {
         $ujian = Ujian::where('slug', $slug)->first();
         return view('page.lihat-peserta', compact('ujian'));
+    }
+
+    public function ujianDone()
+    {
+        return view('page.ujian-done');
+    }
+
+    public function halamanUjianPG(Nilai $nilai)
+    {
+        return view('page.halaman-ujian.page-soal', compact('nilai'));
+    }
+
+    public function halamanUjianPGKompleks(Nilai $nilai)
+    {
+        return view('page.halaman-ujian.page-mc-soal', compact('nilai'));
+    }
+
+    public function halamanUjianEsai(Nilai $nilai)
+    {
+        return view('page.halaman-ujian.page-esay-soal', compact('nilai'));
     }
 }

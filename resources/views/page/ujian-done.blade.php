@@ -37,6 +37,14 @@
 <!-- BEGIN: Body-->
 
 <body>
+    <div id="preload" class="loadingio-spinner-dual-ball-gqrevhuqhbs">
+        <div class="ldio-g2z2ox57oa">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="card mt-2">
             <div class="card-body">
@@ -64,6 +72,13 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script>
+        var preload = document.getElementById("preload");
+
+        window.addEventListener('load', function() {
+            preload.style.display = 'none';
+        })
+    </script>
     <!-- END: Page JS-->
 </body>
 <!-- END: Body-->

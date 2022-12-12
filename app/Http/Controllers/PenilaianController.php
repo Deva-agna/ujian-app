@@ -14,7 +14,7 @@ class PenilaianController extends Controller
         $nilai = Nilai::where('id', $request->nilai_id)->first();
 
         if ($nilai->status) {
-            return view('page.ujian-done');
+            return redirect()->route('ujian.done');
         } else {
             $benar = 0;
             $salah = 0;
@@ -42,7 +42,7 @@ class PenilaianController extends Controller
                 'salah' => $salah,
             ]);
 
-            return view('page.ujian-done');
+            return redirect()->route('ujian.done');
         }
     }
 
@@ -52,7 +52,7 @@ class PenilaianController extends Controller
             $nilai = Nilai::where('id', $request->nilai_id)->first();
 
             if ($nilai->status) {
-                return view('page.ujian-done');
+                return redirect()->route('ujian.done');
             } else {
                 $benar = 0;
                 $salah = 0;
@@ -76,7 +76,7 @@ class PenilaianController extends Controller
                     'salah' => $salah,
                 ]);
 
-                return view('page.ujian-done');
+                return redirect()->route('ujian.done');
             }
         } else {
             Nilai::where('id', $request->nilai_id)->update([
@@ -86,7 +86,7 @@ class PenilaianController extends Controller
                 'salah' => $request->jumlah_soal,
             ]);
 
-            return view('page.ujian-done');
+            return redirect()->route('ujian.done');
         }
     }
 

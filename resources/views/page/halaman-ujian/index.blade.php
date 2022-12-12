@@ -6,6 +6,14 @@
 
 @section('ujian','active')
 
+@section('page-css')
+<style>
+    .bg-selesai {
+        background-color: rgba(40, 199, 111, 0.2) !important;
+    }
+</style>
+@endsection
+
 @section('konten')
 
 <div class="row" id="basic-table">
@@ -25,7 +33,7 @@
                     </thead>
                     <tbody>
                         @forelse($ujian as $data)
-                        <tr>
+                        <tr class="{{ $data->nilai->count() != 0 ? ($data->nilai[0]->status ? 'bg-selesai' : '') : ''}}">
                             <td>
                                 <span>{{$data->title}}</span>
                                 <hr style="margin: 0;">
