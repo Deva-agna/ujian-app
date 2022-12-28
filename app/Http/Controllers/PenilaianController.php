@@ -99,9 +99,10 @@ class PenilaianController extends Controller
     public function penilaianEssayStore(Request $request)
     {
         $request->validate([
-            'nilai.*' => 'required',
+            'nilai.*' => 'required|regex:/^[0-9]+/',
         ], [
             'nilai.*.required' => 'Nilai tidak boleh kosong!',
+            'nilai.*.regex' => 'Nilai tidak boleh negatif!',
         ]);
 
         $nilai = 0;

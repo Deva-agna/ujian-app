@@ -30,7 +30,7 @@
         <form id="form-delete{{$model->id}}" action="{{route('ujian.destroy', $model->slug)}}" method="post">
             @method('delete')
             @csrf
-            <button class="btn-hapus dropdown-item" data-id="{{$model->id}}" style="background-color: transparent;">
+            <button class="btn-hapus dropdown-item w-100" data-id="{{$model->id}}">
                 <i class="fa-solid fa-trash-can"></i>
                 <span>Hapus</span>
             </button>
@@ -44,7 +44,7 @@
                 @csrf
                 <input type="hidden" name="slug" value="{{$model->slug}}">
                 <input type="hidden" name="status" value="active">
-                <button class="btn-active dropdown-item" data-id="{{$model->id}}" style="background-color: transparent;">
+                <button class="btn-active dropdown-item w-100" data-id="{{$model->id}}">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <span>Active</span>
                 </button>
@@ -69,7 +69,7 @@
             @csrf
             <input type="hidden" name="slug" value="{{$model->slug}}">
             <input type="hidden" name="status" value="active">
-            <button class="btn-active dropdown-item" data-id="{{$model->id}}" style="background-color: transparent;">
+            <button class="btn-active dropdown-item w-100" data-id="{{$model->id}}">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <span>Active</span>
             </button>
@@ -84,7 +84,7 @@
                 @csrf
                 <input type="hidden" name="slug" value="{{$model->slug}}">
                 <input type="hidden" name="status" value="pending">
-                <button class="btn-cancelled dropdown-item" data-id="{{$model->id}}" style="background-color: transparent;">
+                <button class="btn-cancelled dropdown-item w-100" data-id="{{$model->id}}">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <span>Cancelled</span>
                 </button>
@@ -97,7 +97,7 @@
                 @csrf
                 <input type="hidden" name="slug" value="{{$model->slug}}">
                 <input type="hidden" name="status" value="completed">
-                <button class="btn-completed dropdown-item" data-id="{{$model->id}}" style="background-color: transparent;">
+                <button class="btn-completed dropdown-item w-100" data-id="{{$model->id}}">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     <span>Tutup Ujian</span>
                 </button>

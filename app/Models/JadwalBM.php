@@ -27,11 +27,6 @@ class JadwalBM extends Model
         return $this->hasMany(Ujian::class);
     }
 
-    public function soal()
-    {
-        return $this->hasMany(Soal::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);

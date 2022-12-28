@@ -10,7 +10,7 @@
         <form id="form-delete{{$model->id}}" action="{{route('sub.kelas.destroy', $model->slug)}}" method="post">
             @method('delete')
             @csrf
-            <button class="btn-hapus dropdown-item" data-id="{{$model->id}}" style="background-color: transparent;">
+            <button class="btn-hapus dropdown-item w-100" data-id="{{$model->id}}">
                 <i class="fa-solid fa-trash-can"></i>
                 <span>Hapus</span>
             </button>

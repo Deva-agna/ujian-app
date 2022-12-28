@@ -46,7 +46,6 @@ class SoalMultipleChoiceController extends Controller
         }
 
         $soal = Soal::create([
-            'jadwal_b_m_id' => $request->jadwalBM_id,
             'mapel_id' => $request->mapel_id,
             'kelas_id' => $request->kelas_id,
             'title' => $request->deskripsi,

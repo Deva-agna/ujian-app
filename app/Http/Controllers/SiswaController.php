@@ -41,7 +41,7 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama.*' => 'required|regex:/^[a-zA-Z.\s]+$/',
+            'nama.*' => 'required',
             'nis.*' => 'required|unique:siswas,nis',
             'sub_kelas.*' => 'required',
         ], [

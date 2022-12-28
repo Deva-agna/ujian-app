@@ -236,3 +236,15 @@
 .ldio-g2z2ox57oa div {
 	box-sizing: content-box;
 }
+
+/* Card Image Jawaban */
+
+.card-soal .card-image{
+	width: 25%;
+}
+
+.card-soal .card-image img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}

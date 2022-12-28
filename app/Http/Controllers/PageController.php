@@ -172,7 +172,7 @@ class PageController extends Controller
                 return redirect()->route('ujian.done');
             } else {
                 if ($ujian->type_ujian == 'pg') {
-                    return redirect()->route('halaman.ujian.pg', $nilai->id);
+                    return redirect()->route('halaman.ujian.pg', $nilai->slug);
                 } elseif ($ujian->type_ujian == 'mc') {
                     return redirect()->route('halaman.ujian.pg.kompleks', $nilai->slug);
                 } else {

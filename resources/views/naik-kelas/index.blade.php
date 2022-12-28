@@ -1,8 +1,8 @@
 @extends('layout.master')
 
-@section('halaman', 'Master Mapel')
+@section('halaman', 'Naik Kelas')
 
-@section('title','Master Mapel')
+@section('title','Naik Kelas')
 
 @section('naik-kelas','active')
 

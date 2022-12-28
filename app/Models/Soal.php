@@ -10,7 +10,6 @@ class Soal extends Model
     use HasFactory;
 
     protected $fillable = [
-        'jadwal_b_m_id',
         'mapel_id',
         'kelas_id',
         'title',
@@ -20,11 +19,6 @@ class Soal extends Model
         'status_update',
         'slug',
     ];
-
-    public function jadwalBM()
-    {
-        return $this->belongsTo(JadwalBM::class);
-    }
 
     public function detailUjian()
     {

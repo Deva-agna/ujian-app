@@ -99,12 +99,14 @@
                     <input id="jawaban_hidden{{$loop->iteration}}" type="hidden" name="jawaban[]">
                     <div class="card-soal mb-1" id="error{{$loop->iteration}}">
                         <p style="width: 100%; margin: 0;" id="noSoal{{$loop->iteration}}" class="font-weight-bold badge badge-light-danger">Soal No. {{$loop->iteration}}</p>
-                        <table>
+                        <table style="width: 100%;">
                             <tr>
-                                <td style="width: 100%;" colspan="2">
+                                <td colspan="2">
                                     <div class="ql-editor" style="white-space: normal;">
                                         @if($data->soal->image)
-                                        <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
+                                        <div class="card-image">
+                                            <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block mb-1" style="cursor: pointer;">
+                                        </div>
                                         @endif
                                         {!! $data->soal->soal !!}
                                     </div>
@@ -116,9 +118,11 @@
                                 <td style="padding-left:15px; white-space: normal;" class="ql-editor">
                                     <div class="custom-control custom-radio">
                                         <input type="radio" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="check[<?= $i ?>]" class="custom-control-input jawaban<?= $i ?>" value="{{$jawaban->id}}" />
-                                        <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
+                                        <label class="custom-control-label w-100" for="jawaban<?= $i ?>{{ $loop->iteration }}">
                                             @if($jawaban->detailSoal->image)
-                                            <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
+                                            <div class="card-image">
+                                                <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" style="cursor: pointer;">
+                                            </div>
                                             @endif
                                             {!! $jawaban->detailSoal->jawaban !!}
                                         </label>
@@ -202,6 +206,7 @@
             let checkLocalStorage = localStorage.getItem(`no${index}`);
             if (checkLocalStorage) {
                 document.getElementById(checkLocalStorage).checked = true;
+                $(`#jawaban_hidden${index}`).val(document.getElementById(checkLocalStorage).value);
                 $(`#noSoal${index}`).addClass("badge-light-success").removeClass("badge-light-danger");
             }
         }

@@ -34,7 +34,6 @@
                 <form name="myForm" action="{{ route('soal.pg.store') }}" method="post" enctype="multipart/form-data" onsubmit="return validasiFrom()">
                     @csrf
                     <input type="hidden" name="ujian_id" value="{{$ujian->id}}">
-                    <input type="hidden" name="jadwalBM_id" value="{{$ujian->jadwal_b_m_id}}">
                     <input type="hidden" name="mapel_id" value="{{$ujian->jadwalBM->mapel_id}}">
                     <input type="hidden" name="kelas_id" value="{{$ujian->jadwalBM->subKelas->kelas_id}}">
                     <div class="card-body">

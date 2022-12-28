@@ -136,7 +136,7 @@
         const id = $(this).data('id');
         Swal.fire({
             title: 'Apakah anda yakin?',
-            text: "Data mapel akan dihapus!",
+            text: "Data Tahun Ajaran akan dihapus!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -155,12 +155,12 @@
         const id = $(this).data('id');
         Swal.fire({
             title: 'Harap Baca!',
-            text: "Tahun ajaran yang telah aktiv akan secata otomatis menjadi tidak aktiv. Pastikan tidak ada kegiatan ujian yang berkaitan dengan tahun ajaran yang sudah aktiv sebelumnya!",
+            text: "Tahun ajaran yang telah aktif akan secata otomatis menjadi tidak aktif. Pastikan tidak ada kegiatan ujian yang berkaitan dengan tahun ajaran yang sudah aktif sebelumnya!",
             icon: 'info',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Aktivkan!',
+            confirmButtonText: 'Ya, Aktifkan!',
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {

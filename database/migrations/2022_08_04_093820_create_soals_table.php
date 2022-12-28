@@ -15,7 +15,6 @@ class CreateSoalsTable extends Migration
     {
         Schema::create('soals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jadwal_b_m_id')->constrained('jadwal_b_m_s');
             $table->foreignId('mapel_id')->constrained('mapels');
             $table->foreignId('kelas_id')->constrained('kelas');
             $table->string('title');

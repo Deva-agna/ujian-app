@@ -104,7 +104,9 @@
                                     <p class="informasi{{$loop->iteration}} mt-1" style="display: none; margin-left: 10px;"><i id="icon-informasi{{$loop->iteration}}" class="fa-solid fa-triangle-exclamation"></i> Pilih {{ $data->soal->detailSoal->where('kunci_jawaban', true)->count() }} jawaban yang anda anggap benar!</p>
                                     <div class="ql-editor" style="white-space: normal;">
                                         @if($data->soal->image)
-                                        <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block" width="200px" style="cursor: pointer;">
+                                        <div class="card-image">
+                                            <img src="{{ asset('soal/'. $data->soal->image) }}" class="img-modal img-fluid d-block" style="cursor: pointer;">
+                                        </div>
                                         @endif
                                         {!! $data->soal->soal !!}
                                     </div>
@@ -118,7 +120,9 @@
                                         <input type="checkbox" class="jawaban<?= $i ?> custom-control-input local-storage" id="jawaban<?= $i ?>{{ $loop->iteration }}" name="jawaban[]" value="{{$jawaban->id}}">
                                         <label class="custom-control-label" for="jawaban<?= $i ?>{{ $loop->iteration }}">
                                             @if($jawaban->detailSoal->image)
-                                            <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" width="200px" style="cursor: pointer;">
+                                            <div class="card-image">
+                                                <img src="{{ asset('soal/'. $jawaban->detailSoal->image) }}" class="img-modal img-fluid d-block mb-1" style="cursor: pointer;">
+                                            </div>
                                             @endif
                                             {!! $jawaban->detailSoal->jawaban !!}
                                         </label>
